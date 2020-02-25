@@ -211,8 +211,12 @@
         width: 8.7pt;
       }
 
-      .address {
-        margin-top: 2.8pt;
+      .address { 
+        font-size: 0;        
+        margin-top: 2.8pt; 
+      }
+      
+      .address > span {
         font-family: 'Franklin Gothic Book';
         font-size: 7pt;
         line-height: 1.2em;
@@ -275,7 +279,12 @@
             <div class="content content--bottom" data-max-height="dynamic">
               <div class="info">
                 <div class="info__label {{^AB_mobile-number--bc}}u{{/AB_mobile-number--bc}}-{{^user.contact_number}}none{{/user.contact_number}}">M</div><!--info__label-->
-                <div class="info__value">{{{AB_mobile-number--bc}}}{{^AB_mobile-number--bc}}{{{user.contact_number}}}{{/AB_mobile-number--bc}}</div><!--info__value-->
+                <div class="info__value">
+                  <div class="js-phone-formater-src">
+                    {{{AB_mobile-number--bc}}}{{^AB_mobile-number--bc}}{{{user.contact_number}}}{{/AB_mobile-number--bc}}
+                  </div>
+                  <div class="js-phone-formater-target"></div>
+                </div><!--info__value-->
               </div><!--info-->
               <div class="info {{^AB_email-address--bc}}u{{/AB_email-address--bc}}-{{^user.email}}none{{/user.email}}">
                 <div class="info__label">E</div><!--info__label-->
@@ -319,7 +328,12 @@
             <div class="content content--bottom" data-max-height="dynamic">
               <div class="info {{^mobile-number}}u{{/mobile-number}}-{{^user.contact_number}}none{{/user.contact_number}}">
                 <div class="info__label">M</div><!--info__label-->
-                <div class="info__value">{{{mobile-number}}}{{^mobile-number}}{{{user.contact_number}}}{{/mobile-number}}</div><!--info__value-->
+                <div class="info__value">
+                  <div class="js-phone-formater-src">
+                    {{{mobile-number}}}{{^mobile-number}}{{{user.contact_number}}}{{/mobile-number}}
+                  </div>
+                  <div class="js-phone-formater-target"></div>
+                </div><!--info__value-->
               </div><!--info-->
               <div class="info {{^email-address}}u{{/email-address}}-{{^user.email}}none{{/user.email}}">
                 <div class="info__label">E</div><!--info__label-->
@@ -357,24 +371,25 @@
               <div class="heading" data-max-line="1">
                 {{#AB_first-name--bc}}<span>{{{AB_first-name--bc}}}</span>{{/AB_first-name--bc}}{{^AB_first-name--bc}}<span>{{{user.first_name}}}</span>{{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}{{/AB_first-name--bc}}   
                 {{#AB_surname--bc}}<span>{{{AB_surname--bc}}}</span>{{/AB_surname--bc}}{{^AB_surname--bc}}<span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}{{/AB_surname--bc}}
-				</div><!--heading-->
+              </div><!--heading-->
               <div class="subheading">{{{AB_title--bc}}}<br>{{{AB_qualification--bc}}}</div><!--subheading-->
             </div><!--content-->
             <div class="content content--bottom" data-max-height="dynamic">
               <div class="info {{^AB_mobile-number--bc}}u{{/AB_mobile-number--bc}}-{{^user.contact_number}}none{{/user.contact_number}}">
                 <div class="info__label">M</div><!--info__label-->
                 <div class="info__value">
-
-                  {{#AB_mobile-number--bc}}<span>{{{AB_mobile-number--bc}}}</span>{{/AB_mobile-number--bc}}{{^AB_mobile-number--bc}}<span>{{{user.contact_number}}}</span>{{^user.contact_number}}<span>&lt;Phone Number&gt;</span>{{/user.contact_number}}{{/AB_mobile-number--bc}}                
-                
+                  <div class="js-phone-formater-src">
+                    {{#AB_mobile-number--bc}}<span>{{{AB_mobile-number--bc}}}</span>{{/AB_mobile-number--bc}}{{^AB_mobile-number--bc}}<span>{{{user.contact_number}}}</span>{{^user.contact_number}}<span>&lt;Phone Number&gt;</span>{{/user.contact_number}}{{/AB_mobile-number--bc}}
+                  </div>                
+                  <div class="js-phone-formater-target"></div>
                 </div><!--info__value-->
               </div><!--info-->
               <div class="info {{^AB_email-address--bc}}u{{/AB_email-address--bc}}-{{^user.email}}none{{/user.email}}">
                 <div class="info__label">E</div><!--info__label-->
                 <div class="info__value">
-                  
-                {{#AB_email-address--bc}}<span>{{{AB_email-address--bc}}}</span>{{/AB_email-address--bc}}{{^AB_email-address--bc}}<span>{{{user.email}}}</span>{{^user.email}}<span>&lt;Email&gt;</span>{{/user.email}}{{/AB_email-address--bc}}   
-                  
+
+                  {{#AB_email-address--bc}}<span>{{{AB_email-address--bc}}}</span>{{/AB_email-address--bc}}{{^AB_email-address--bc}}<span>{{{user.email}}}</span>{{^user.email}}<span>&lt;Email&gt;</span>{{/user.email}}{{/AB_email-address--bc}}   
+
                 </div><!--info__value-->
               </div><!--info-->
               <div class="address">
@@ -407,8 +422,8 @@
           <div class="body">
             <div class="content content--top js-subtrahend">
               <div class="heading" data-max-line="1">
-                {{#AB_first-name--bc}}<span>{{{AB_first-name--bc}}}</span>{{/AB_first-name--bc}}{{^AB_first-name--bc}}<span>{{{user.first_name}}}</span>{{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}{{/AB_first-name--bc}}   
-                {{#AB_surname--bc}}<span>{{{AB_surname--bc}}}</span>{{/AB_surname--bc}}{{^AB_surname--bc}}<span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}{{/AB_surname--bc}}
+                {{#first-name}}<span>{{{first-name}}}</span>{{/first-name}}{{^first-name}}<span>{{{user.first_name}}}</span>{{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}{{/first-name}}
+                {{#surname}}<span>{{{surname}}}</span>{{/surname}}{{^surname}}<span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}{{/surname}}
               </div><!--heading-->
               <div class="subheading">{{{title}}}<br>{{{qualification}}}</div><!--subheading-->
             </div><!--content-->
@@ -416,12 +431,15 @@
               <div class="info {{^mobile-number}}u{{/mobile-number}}-{{^user.contact_number}}none{{/user.contact_number}}">
                 <div class="info__label">M</div><!--info__label-->
                 <div class="info__value">
-                {{#AB_mobile-number--bc}}<span>{{{AB_mobile-number--bc}}}</span>{{/AB_mobile-number--bc}}{{^AB_mobile-number--bc}}<span>{{{user.contact_number}}}</span>{{^user.contact_number}}<span>&lt;Phone Number&gt;</span>{{/user.contact_number}}{{/AB_mobile-number--bc}}  
+                  <div class="js-phone-formater-src">
+                    {{#mobile-number}}<span>{{{mobile-number}}}</span>{{/mobile-number}}{{^mobile-number}}<span>{{{user.contact_number}}}</span>{{^user.contact_number}}<span>&lt;Phone Number&gt;</span>{{/user.contact_number}}{{/mobile-number}}
+                  </div>  
+                  <div class="js-phone-formater-target"></div>
                 </div><!--info__value-->
               </div><!--info-->
               <div class="info {{^email-address}}u{{/email-address}}-{{^user.email}}none{{/user.email}}">
                 <div class="info__label">E</div><!--info__label-->
-                <div class="info__value">{{#AB_email-address--bc}}<span>{{{AB_email-address--bc}}}</span>{{/AB_email-address--bc}}{{^AB_email-address--bc}}<span>{{{user.email}}}</span>{{^user.email}}<span>&lt;Email&gt;</span>{{/user.email}}{{/AB_email-address--bc}}</div><!--info__value-->
+                <div class="info__value">{{#email-address}}<span>{{{email-address}}}</span>{{/email-address}}{{^email-address}}<span>{{{user.email}}}</span>{{^user.email}}<span>&lt;Email&gt;</span>{{/user.email}}{{/email-address}}</div><!--info__value-->
               </div><!--info-->
               <div class="address">
                 <span class="u-with-comma">{{{postal-address}}}{{^postal-address}}{{{user.address}}}{{/postal-address}}</span>
@@ -481,6 +499,28 @@
 
       console.clear();
 
+      function formatPhone() {
+        const sources = document.querySelectorAll('.js-phone-formater-src');
+
+        sources.forEach(source => {
+          const target = source.parentNode.querySelector('.js-phone-formater-target');
+          
+          //normalize string and remove all unnecessary characters
+          let phone = source.innerText.replace(/[^\d]/g, "");
+
+          //check if number length equals to 10
+          if (phone.length === 10) {
+            const formated = phone.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
+            target.innerText = formated;
+            source.style.display = 'none';
+            target.style.display = 'block';
+          } else {
+            source.style.display = 'block';
+            target.style.display = 'none';
+          }
+        })
+      }
+
       // Tracking text changes and firing text restriction functions (mutationObserver)
       const overflowObserver = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
@@ -498,6 +538,14 @@
       });      
 
       const injectSources = document.querySelectorAll('[data-target-id]');
+      
+      const formatPhoneObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          formatPhone();
+        });
+      });      
+
+      const formatPhoneSources = document.querySelectorAll('.js-phone-formater-src');      
 
       overflowObserver.observe(document.body, {
         attributes: false,
@@ -519,7 +567,20 @@
             characterDataOldValue: true
           });            
         });
-      }    
+      }
+
+      if ( formatPhoneSources.length > 0 ) {
+        formatPhoneSources.forEach(src => {
+          formatPhoneObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }      
 
       // Calling text size restriction functions once the fonts are loaded
       document.fonts.ready.then(() => {
@@ -527,6 +588,7 @@
         maxHeightCheck();
         injectDynamicContent();
         hideEmptyTitles();
+        formatPhone();
       });
 
       placeholderController();
@@ -537,7 +599,7 @@
       // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
       TextFit.fit({
         selector: '.textFit'
-      });
+      });      
 
 
     </script>
