@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/arial-2/stylesheet.css');
+
+      /* Inputs Order
+      {{show-crop}}
+      {{placeholder-opacity}}
+      {{placeholder-toggle-new}}
+      {{placeholder-validation}}
+      {{placeholder-image-1}}
+      {{placeholder-image-2}}
+      {{placeholder-image-3}}
+      {{placeholder-image-4}}
+      {{placeholder-image-5}}
+      {{{AB_toggle-input-mode--bc}}} 
+      {{{AB_card-variation--bc}}} 
+      {{{AB_colour-theme--bc}}}
+      {{{AB_first-name--bc}}}
+      {{{AB_surname--bc}}} 
+      {{{AB_title--bc}}}      
+      {{{AB_qualification--bc}}}
+      {{{AB_mobile-number--bc}}}
+      {{{AB_email-address--bc}}}
+      {{AB_postal-address--bc}}}
+      {{{AB_suburb--bc}}} 
+      {{{AB_state--bc}}} 
+      {{{AB_postcode--bc}}}
+      */
+
+      :root {
+        --dark-blue: {{{account.colors.pms-540}}};
+        --light-blue: {{{account.colors.pms-2985}}};
+        --white: #fff;
+      }
+
+      .themeColor--white {
+        --dynamic-frontColor: var(--white);
+        --dynamic-backColor: var(--white);
+        --dynamic-textColor: var(--dark-blue);
+        --dynamic-websiteColor: var(--dark-blue);
+      }
+
+      .themeColor--darkBlue {
+        --dynamic-frontColor: var(--dark-blue);
+        --dynamic-backColor: var(--dark-blue);
+        --dynamic-textColor: var(--white);
+        --dynamic-websiteColor: var(--light-blue);
+      }
+
+      .themeColor--white-lightBlue {
+        --dynamic-frontColor: var(--white);
+        --dynamic-backColor: var(--light-blue);
+        --dynamic-textColor: var(--dark-blue);
+        --dynamic-websiteColor: var(--dark-blue);
+      }
+
+      .themeColor--dark-lightBlue {
+        --dynamic-frontColor: var(--dark-blue);
+        --dynamic-backColor: var(--light-blue);
+        --dynamic-textColor: var(--white);
+        --dynamic-websiteColor: var(--light-blue);
+      }
+
+      html {
+        font-family: 'Franklin Gothic Demi';
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 30pt 28.1pt 22.5pt;
+      }
+
+      .fit--secondPage {
+        justify-content: center;
+        align-items: center;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .cardVariation--single-side.inputMode--single-card .singleSide-singleCard,
+      .cardVariation--single-side.inputMode--multi-card .singleSide-multiCard,
+      .cardVariation--double-side.inputMode--single-card .doubleSide-singleCard,
+      .cardVariation--double-side.inputMode--multi-card .doubleSide-multiCard {
+        display: block;
+        background-color: var(--dynamic-frontColor);
+      }
+
+      .cardVariation--double-side .doubleSided-secondPage {
+        display: block;
+      }
+
+      .doubleSided-secondPage {
+        background-color: var(--dynamic-backColor);
+      }
+
+      .header {
+        margin-bottom: 12.3pt;
+      }
+
+      .logo {
+        width: 93.6pt;
+        display: none;
+      }
+
+      .doubleSided-secondPage .logo {
+        width: 135.3pt;
+      }
+
+      .themeColor--white .logo--primary,
+      .themeColor--darkBlue .logo--secondary,
+      .themeColor--white-lightBlue .logo--primary,
+      .themeColor--dark-lightBlue .logo--primary {
+        display: block;
+      }
+
+      .body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        color: var(--dynamic-textColor);
+      }
+
+      .heading,
+      .subheading,
+      .info {
+        line-height: 1.2em;
+      }      
+
+      .heading {
+        margin-bottom: 1.2pt;
+        font-family: 'Franklin Gothic';
+        font-size: 10.2pt;
+        font-weight: 500;
+      }
+
+      .subheading {
+        font-family: 'Franklin Gothic';
+        font-size: 6.9pt;
+        font-weight: 500;
+      }
+
+      .info {
+        display: flex;
+        margin-top: 2.4pt;
+        font-family: 'Franklin Gothic Book';
+        font-size: 7pt;
+      }
+
+      .info__label {
+        width: 11pt;
+      }
+
+      .cardVariation--double-side .info__label {
+        width: 8.7pt;
+      }
+
+      .address {
+        margin-top: 2.8pt;
+        font-family: 'Franklin Gothic Book';
+        font-size: 7pt;
+        line-height: 1.2em;
+      }
+
+      .u-with-comma:before { content: ', '; }
+      .u-with-comma:first-child:before { display: none; }
+      .u-with-comma:empty:before { display: none; }  
+      .u-with-comma:first-child:empty + .u-with-comma:before { display:none; } 
+
+      .footer {
+        margin-top: 9pt;
+      }
+
+      .cardVariation--double-side .footer {
+        margin-top: 12pt;
+      }
+
+      .website {
+        font-family: 'Franklin Gothic Demi';
+        font-size: 7pt;
+        line-height: 1.2em;
+        color:  var(--dynamic-websiteColor);
+      }
+
+      .u-none {
+        display: none;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" 
+        class="cardVariation--{{{AB_card-variation--bc}}}
+               inputMode--{{{AB_toggle-input-mode--bc}}}
+               themeColor--{{{AB_colour-theme--bc}}}{{^AB_colour-theme--bc}}white{{/AB_colour-theme--bc}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-2 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-3 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-4 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-5 }}"></div>
+    </div><!-- end placeholderMaster -->
+
+    <!--single-sided-page-->
+    <div class="page singleSide-singleCard">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="header">
+            <img class="logo logo--primary" src="{{{account.logos.logo-primary}}}">
+          </div><!--header-->
+          <div class="body">
+            <div class="content content--top js-subtrahend">     
+              <div class="heading" data-max-line="1">{{{AB_first-name--bc}}}{{^AB_first-name--bc}}{{{user.first_name}}}{{/AB_first-name--bc}} {{{AB_surname--bc}}}{{^AB_surname--bc}}{{{user.last_name}}}{{/AB_surname--bc}}</div><!--heading-->
+              <div class="subheading" data-max-line="1">{{{AB_title--bc}}} {{{AB_qualification--bc}}}</div><!--subheading-->
+            </div><!--content-->
+            <div class="content content--bottom" data-max-height="dynamic">
+              <div class="info">
+                <div class="info__label {{^AB_mobile-number--bc}}u{{/AB_mobile-number--bc}}-{{^user.contact_number}}none{{/user.contact_number}}">M</div><!--info__label-->
+                <div class="info__value">{{{AB_mobile-number--bc}}}{{^AB_mobile-number--bc}}{{{user.contact_number}}}{{/AB_mobile-number--bc}}</div><!--info__value-->
+              </div><!--info-->
+              <div class="info {{^AB_email-address--bc}}u{{/AB_email-address--bc}}-{{^user.email}}none{{/user.email}}">
+                <div class="info__label">E</div><!--info__label-->
+                <div class="info__value">{{{AB_email-address--bc}}}{{^AB_email-address--bc}}{{{user.email}}}{{/AB_email-address--bc}}</div><!--info__value-->
+              </div><!--info-->
+              <div class="address">
+                <span class="u-with-comma">{{{AB_postal-address--bc}}}{{^AB_postal-address--bc}}{{{user.address}}}{{/AB_postal-address--bc}}</span>
+                <span class="u-with-comma">{{{AB_suburb--bc}}}{{^AB_suburb--bc}}{{{user.suburb}}}{{/AB_suburb--bc}}</span>
+                <span class="u-with-comma">{{{AB_state--bc}}}{{^AB_state--bc}}{{{user.state}}}{{/AB_state--bc}}</span>
+                <span class="u-with-comma">{{{AB_postcode--bc}}}{{^AB_postcode--bc}}{{{user.postcode}}}{{/AB_postcode--bc}}</span>
+              </div><!--address-->
+            </div><!--content-->
+          </div><!--body-->
+          <div class="footer">
+            <div class="website">adelaidebank.com.au</div><!--website-->
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <!--single-sided-page with spreadsheet-->
+    {{#spreadsheet.AB_cardholder-details--bc}}
+    <div class="page singleSide-multiCard">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="header">
+            <img class="logo logo--primary" src="{{{account.logos.logo-primary}}}">
+          </div><!--header-->
+          <div class="body">
+            <div class="content content--top js-subtrahend">
+              <div class="heading" data-max-line="1">{{{first-name}}}{{^first-name}}{{{user.first_name}}}{{/first-name}} {{{surname}}}{{^surname}}{{{user.last_name}}}{{/surname}}</div><!--heading-->
+              <div class="subheading" data-max-line="1">{{{title}}} {{{qualification}}}</div><!--subheading-->
+            </div><!--content-->
+            <div class="content content--bottom" data-max-height="dynamic">
+              <div class="info {{^mobile-number}}u{{/mobile-number}}-{{^user.contact_number}}none{{/user.contact_number}}">
+                <div class="info__label">M</div><!--info__label-->
+                <div class="info__value">{{{mobile-number}}}{{^mobile-number}}{{{user.contact_number}}}{{/mobile-number}}</div><!--info__value-->
+              </div><!--info-->
+              <div class="info {{^email-address}}u{{/email-address}}-{{^user.email}}none{{/user.email}}">
+                <div class="info__label">E</div><!--info__label-->
+                <div class="info__value">{{{email-address}}}{{^email-address}}{{{user.email}}}{{/email-address}}</div><!--info__value-->
+              </div><!--info-->
+              <div class="address">
+                <span class="u-with-comma">{{{postal-address}}}{{^postal-address}}{{{user.address}}}{{/postal-address}}</span>
+                <span class="u-with-comma">{{{suburb}}}{{^suburb}}{{{user.suburb}}}{{/suburb}}</span>
+                <span class="u-with-comma">{{{state}}}{{^state}}{{{user.state}}}{{/state}}</span>
+                <span class="u-with-comma">{{{postcode}}}{{^postcode}}{{{user.postcode}}}{{/postcode}}</span>
+              </div><!--address-->
+            </div><!--content-->
+          </div><!--body-->
+          <div class="footer">
+            <div class="website">adelaidebank.com.au</div><!--website-->
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/spreadsheet.AB_cardholder-details--bc}}
+
+
+    <!--double-sided-first-page-->
+    <div class="page doubleSide-singleCard">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="body">
+            <div class="content content--top js-subtrahend">
+              <div class="heading" data-max-line="1">
+                {{#AB_first-name--bc}}<span>{{{AB_first-name--bc}}}</span>{{/AB_first-name--bc}}{{^AB_first-name--bc}}<span>{{{user.first_name}}}</span>{{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}{{/AB_first-name--bc}}   
+                {{#AB_surname--bc}}<span>{{{AB_surname--bc}}}</span>{{/AB_surname--bc}}{{^AB_surname--bc}}<span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}{{/AB_surname--bc}}
+				</div><!--heading-->
+              <div class="subheading">{{{AB_title--bc}}}<br>{{{AB_qualification--bc}}}</div><!--subheading-->
+            </div><!--content-->
+            <div class="content content--bottom" data-max-height="dynamic">
+              <div class="info {{^AB_mobile-number--bc}}u{{/AB_mobile-number--bc}}-{{^user.contact_number}}none{{/user.contact_number}}">
+                <div class="info__label">M</div><!--info__label-->
+                <div class="info__value">
+
+                  {{#AB_mobile-number--bc}}<span>{{{AB_mobile-number--bc}}}</span>{{/AB_mobile-number--bc}}{{^AB_mobile-number--bc}}<span>{{{user.contact_number}}}</span>{{^user.contact_number}}<span>&lt;Phone Number&gt;</span>{{/user.contact_number}}{{/AB_mobile-number--bc}}                
+                
+                </div><!--info__value-->
+              </div><!--info-->
+              <div class="info {{^AB_email-address--bc}}u{{/AB_email-address--bc}}-{{^user.email}}none{{/user.email}}">
+                <div class="info__label">E</div><!--info__label-->
+                <div class="info__value">
+                  
+                {{#AB_email-address--bc}}<span>{{{AB_email-address--bc}}}</span>{{/AB_email-address--bc}}{{^AB_email-address--bc}}<span>{{{user.email}}}</span>{{^user.email}}<span>&lt;Email&gt;</span>{{/user.email}}{{/AB_email-address--bc}}   
+                  
+                </div><!--info__value-->
+              </div><!--info-->
+              <div class="address">
+                <span class="u-with-comma">{{{AB_postal-address--bc}}}{{^AB_postal-address--bc}}{{{user.address}}}{{/AB_postal-address--bc}}</span>
+                <span class="u-with-comma">{{{AB_suburb--bc}}}{{^AB_suburb--bc}}{{{user.suburb}}}{{/AB_suburb--bc}}</span>
+                <span class="u-with-comma">{{{AB_state--bc}}}{{^AB_state--bc}}{{{user.state}}}{{/AB_state--bc}}</span>
+                <span class="u-with-comma">{{{AB_postcode--bc}}}{{^AB_postcode--bc}}{{{user.postcode}}}{{/AB_postcode--bc}}</span>
+              </div><!--address-->
+            </div><!--content-->
+          </div><!--body-->
+          <div class="footer">
+            <div class="website">adelaidebank.com.au</div><!--website-->
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <!--double-sided-first-page with spreadsheet-->
+    {{#spreadsheet.AB_cardholder-details--bc}}
+    <div class="page doubleSide-multiCard">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="body">
+            <div class="content content--top js-subtrahend">
+              <div class="heading" data-max-line="1">
+                {{#AB_first-name--bc}}<span>{{{AB_first-name--bc}}}</span>{{/AB_first-name--bc}}{{^AB_first-name--bc}}<span>{{{user.first_name}}}</span>{{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}{{/AB_first-name--bc}}   
+                {{#AB_surname--bc}}<span>{{{AB_surname--bc}}}</span>{{/AB_surname--bc}}{{^AB_surname--bc}}<span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}{{/AB_surname--bc}}
+              </div><!--heading-->
+              <div class="subheading">{{{title}}}<br>{{{qualification}}}</div><!--subheading-->
+            </div><!--content-->
+            <div class="content content--bottom" data-max-height="dynamic">
+              <div class="info {{^mobile-number}}u{{/mobile-number}}-{{^user.contact_number}}none{{/user.contact_number}}">
+                <div class="info__label">M</div><!--info__label-->
+                <div class="info__value">
+                {{#AB_mobile-number--bc}}<span>{{{AB_mobile-number--bc}}}</span>{{/AB_mobile-number--bc}}{{^AB_mobile-number--bc}}<span>{{{user.contact_number}}}</span>{{^user.contact_number}}<span>&lt;Phone Number&gt;</span>{{/user.contact_number}}{{/AB_mobile-number--bc}}  
+                </div><!--info__value-->
+              </div><!--info-->
+              <div class="info {{^email-address}}u{{/email-address}}-{{^user.email}}none{{/user.email}}">
+                <div class="info__label">E</div><!--info__label-->
+                <div class="info__value">{{#AB_email-address--bc}}<span>{{{AB_email-address--bc}}}</span>{{/AB_email-address--bc}}{{^AB_email-address--bc}}<span>{{{user.email}}}</span>{{^user.email}}<span>&lt;Email&gt;</span>{{/user.email}}{{/AB_email-address--bc}}</div><!--info__value-->
+              </div><!--info-->
+              <div class="address">
+                <span class="u-with-comma">{{{postal-address}}}{{^postal-address}}{{{user.address}}}{{/postal-address}}</span>
+                <span class="u-with-comma">{{{suburb}}}{{^suburb}}{{{user.suburb}}}{{/suburb}}</span>
+                <span class="u-with-comma">{{{state}}}{{^state}}{{{user.state}}}{{/state}}</span>
+                <span class="u-with-comma">{{{postcode}}}{{^postcode}}{{{user.postcode}}}{{/postcode}}</span>
+              </div><!--address-->
+            </div><!--content-->
+          </div><!--body-->
+          <div class="footer">
+            <div class="website">adelaidebank.com.au</div><!--website-->
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/spreadsheet.AB_cardholder-details--bc}}
+
+
+    <!--double-sided-second-page-->
+    <div class="page doubleSided-secondPage">
+
+      <div class="bleed">
+
+        <div class="container fit fit--secondPage">
+          <img class="logo logo--primary" src="{{{account.logos.logo-primary}}}">
+          <img class="logo logo--secondary" src="{{{account.logos.logo-reversed}}}">
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+
+
+  </body>
+</html>
