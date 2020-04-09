@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  <head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+
+    <!-- Web Font / @font-face : BEGIN -->
+    <!-- NOTE: If web fonts are not required, lines 9 - 26 can be safely removed. -->
+
+    <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+    <!--[if mso]>
+  <style>
+   * {
+    font-family: sans-serif !important;
+   }
+
+ table {border-collapse: collapse;}
+  </style>
+ <![endif]-->
+
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!--[if !mso]><!-->
+    <!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+    <!--<![endif]-->
+
+    <!-- Web Font / @font-face : END -->
+
+    <!-- CSS Reset -->
+    <style type="text/css">
+
+      /** Overflow Styles **/
+      .overflow {
+        position: relative !important;
+        border: 1px dashed red;
+        color: red !important;
+      }
+
+      .overflow * { 
+        color: inherit !important; 
+      }
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative;
+        z-index: 999;}
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0;
+        right: 0;
+        height: 1em;
+        width: 1em;
+        max-height: 100%;
+        color: red;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 0.8em;
+        text-align: center;
+        line-height: 1em;
+        background-color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'Max number of lines exceeded!';
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: black;
+        color: white;
+        border-radius: 0;
+        padding: 0 1.5em 0 0.5em;
+        box-sizing: border-box;
+        max-height: 100%;
+        font-size: 0.8em;
+        font-weight: 400;
+        text-align: right;
+        line-height: 1em;
+        z-index: 2;
+      }
+
+      .overflow[data-max-height]:hover:after {
+        content: 'Max height exceeded!';  
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      }
+
+      .overflow .token-value.token-empty {
+        display: none;
+      }      
+
+      /* What it does: Remove spaces around the email design added by some email clients. */
+      /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+      html,
+      body {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+      }
+
+      /* What it does: Stops email clients resizing small text. */
+      * {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      /* What is does: Centers email on Android 4.4 */
+      div[style*="margin: 16px 0"] {
+        margin:0 !important;
+      }
+
+      /* What it does: Stops Outlook from adding extra spacing to tables. */
+      table,
+      td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+      }
+
+      /* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+      table {
+
+        border-spacing: 0 !important;
+        border-collapse: collapse !important;
+        table-layout: fixed !important;
+        Margin: 0 auto !important;
+      }
+      table table table {
+        table-layout: auto; 
+      }
+
+      /* What it does: Uses a better rendering method when resizing images in IE. */
+      img {
+        -ms-interpolation-mode:bicubic;
+      }
+
+      /* What it does: A work-around for iOS meddling in triggered links. */
+      .mobile-link--footer a,
+      a[x-apple-data-detectors] {
+        color:inherit !important;
+        text-decoration: underline !important;
+      }
+
+    </style>
+
+    <!-- Progressive Enhancements -->
+    <style>
+
+      /* What it does: Hover styles for buttons */
+      .button-td,
+      .button-a {
+        transition: all 100ms ease-in;
+      }
+      .button-td:hover,
+      .button-a:hover {
+        background: #555555 !important;
+        border-color: #555555 !important;
+      }
+
+      p {
+        margin-block-start: 0;
+        margin-block-end: 0;
+      }
+
+
+      /* Media Queries */
+      @media screen and (max-width: 600px) {
+
+        .first-mob-width {
+          width: 100px;
+        }
+
+        .mob-width {
+          width: 300px;
+        }
+
+        .mob-pad-right {
+          padding-right: 25px;
+        }
+
+        .email-container {
+          width: 100% !important;
+          margin: auto !important;
+        }
+
+        /* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */
+        .fluid,
+        .fluid-centered {
+          max-width: 100% !important;
+          height: auto !important;
+          Margin-left: auto !important;
+          Margin-right: auto !important;
+        }
+        /* And center justify these ones. */
+        .fluid-centered {
+          Margin-left: auto !important;
+          Margin-right: auto !important;
+        }
+
+        /* What it does: Forces table cells into full-width rows. */
+        .stack-column,
+        .stack-column-center {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          direction: ltr !important;
+        }
+        /* And center justify these ones. */
+        .stack-column-center {
+          text-align: center !important;
+        }
+
+        /* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+        .center-on-narrow {
+          text-align: center !important;
+          display: block !important;
+          Margin-left: auto !important;
+          Margin-right: auto !important;
+          float: none !important;
+        }
+        table.center-on-narrow {
+          display: inline-block !important;
+        }
+      }     
+
+      .eventDetails tr:last-child td {
+        border-bottom: 0 !important;
+      }
+
+      .placeholder {
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: 0px;
+        pointer-events: none;
+        transform: translateX(-50%);
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.4;
+        z-index: 1;
+      }
+
+      .placeholder--1 {
+        width: 650px; 
+        height: 800px;
+        background-image: url(https://files.outfit.io/media_library_items/148933/Template-Invite-eDM.jpg); 
+      }
+
+    </style>
+    <style>{{{account.snippets.emailExportCSS}}}</style>
+
+  </head>
+  <body bgcolor="#f2f2f2" width="100%" style="Margin: 0;">
+    {{{account.snippets.emailExportHTML}}}
+    <div class="placeholder placeholder--1"></div> 
+    <center style="width: 100%;">
+
+      <!-- ###Email Body : BEGIN -->
+      <table id="email" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" width="650" style="margin: auto;" class="email-container">
+        <tr>
+          <td align="left" valign="top" width="100%" style="padding-top: 25px; padding-right: 25px; padding-bottom: 15px; padding-left: 25px;" bgcolor="#ffffff">
+            <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff" style="font-family: Arial, Helvetica, sans-serif;">
+
+              <!-- ###EMAIL BANNER : BEGIN -->
+              <tr>
+                
+                <td bgcolor="{{{account.colors.15-black-tint}}}" width="100%">
+                  <img src="https://adelaidebank.outfit.io/projects/141904/documents/1044506/dynamic_export?access_token=aCfVFwaMwMhj3bbcGR7pLTM3&context%5BAB_layout-choice--eb%5D={{{AB_layout-choice--eb}}}&context%5BAB_background-image--edm-invite%5D={{{AB_background-image--edm-invite}}}&context%5BAB_text-copy--eb%5D={{{AB_text-copy--eb}}}" style=" display: block; border: 0; width: 100%; max-height: 189px;">
+                </td>
+              </tr>
+              <!-- ///EMAIL BANNER : END height="170" -->
+
+              <!-- ###MAIN BODY WRAPPER : BEGIN (added because of padding top 25px to whole email body)-->
+              <tr>
+                <td align="left" valign="top" width="100%" style="padding-top: 25px; padding-left: 25px; padding-right: 25px;" bgcolor="#ffffff">
+                  <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff" style="font-family: Arial, Helvetica, sans-serif; ">
+
+                    <!-- ###HEADING : BEGIN -->
+                    {{#BA_heading--ei}}
+                    <tr>
+                      <td valign="top" style="font-family: sans-serif; padding-bottom: 17px; mso-height-rule: exactly;" class="center-on-narrow">
+                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 34.5px; line-height: 1em; font-weight: bold; color: {{{account.colors.pms-540}}};" data-max-line="4">
+                          {{{BA_heading--ei}}}
+                        </p>
+                      </td>
+                    </tr>
+                    {{/BA_heading--ei}}
+                    <!-- ///HEADING : BEGIN -->
+
+                    <!-- ###SUBHEADING : BEGIN -->
+                    {{#BA_subheading--ei}}
+                    <tr>
+                      <td valign="top" style="font-family: sans-serif; padding-bottom: 15px; mso-height-rule: exactly;" class="center-on-narrow">
+                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1em; color: {{{account.colors.pms-540}}};" data-max-line="2">
+                          {{{BA_subheading--ei}}}
+                        </p>
+                      </td>
+                    </tr>
+                    {{/BA_subheading--ei}}
+                    <!-- ///SUBHEADING : END -->
+
+                    <!-- ###EVENT DETAILS : BEGIN -->
+                    <tr>
+                      <td align="left" style="padding-bottom: 14px;" class="mob-pad-right">
+                        <table align="left" class="eventDetails" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="font-family: Arial, Helvetica, sans-serif; border-collapse: collapse; margin: auto; border: 1px solid {{{account.colors.pms-540}}}; border-right: 0; border-left: 0;">
+                          {{#collection.BA_event-details--ei}}
+                          {{#block.BA_date--ei}}
+                          <tr>
+                            <td width="41px" background="#ff0000" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 9px; padding-right: 3px; background-color: {{{account.colors.pms-540}}}; border-bottom: 1px solid #ffffff;" class="first-mob-width">
+                              <p style="font-size: 11px; font-family: Arial, Helvetica, sans-serif; line-height: 1em; font-weight: bold; color:#ffffff;">Date:</p>
+                            </td>
+                            <td width="90%" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 12px; border-bottom: 1px solid {{{account.colors.pms-540}}}; font-weight: bold; font-family: Arial, Helvetica, sans-serif; " data-max-height="40" class="mob-width">
+                              <p style="font-size: 10.9px; font-family: Arial, Helvetica, sans-serif; line-height: 1em; color:{{{account.colors.pms-pantone-black}}};">{{{BA_enter-date--ei}}}</p>
+                            </td>
+                          </tr>
+                          {{/block.BA_date--ei}}
+                          {{#block.BA_time--ei}}
+                          <tr>
+                            <td width="41px" background="#ff0000" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 9px; padding-right: 3px; background-color: {{{account.colors.pms-540}}}; border-bottom: 1px solid #ffffff;" class="first-mob-width">
+                              <p style="font-size: 11px; font-family: Arial, Helvetica, sans-serif; line-height: 1em; font-weight: bold; color:#ffffff;">Time:</p>
+                            </td>
+                            <td width="90%" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 12px; border-bottom: 1px solid {{{account.colors.pms-540}}}; font-weight: bold;" data-max-height="40" class="mob-width">
+                              <p style="font-size: 10.9px; font-family: Arial, Helvetica, sans-serif; line-height: 1em; color:{{{account.colors.pms-pantone-black}}};">{{{BA_enter-time--ei}}}</p>
+                            </td>
+                          </tr>
+                          {{/block.BA_time--ei}}
+                          {{#block.BA_venue--ei}}
+                          <tr>
+                            <td width="41px" background="#ff0000" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 9px; padding-right: 3px; background-color: {{{account.colors.pms-540}}}; border-bottom: 1px solid #ffffff;" class="first-mob-width">
+                              <p style="font-size: 11px; font-family: Arial, Helvetica, sans-serif; line-height: 1em; font-weight: bold; color:#ffffff;">Venue:</p>
+                            </td>
+                            <td width="90%" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 12px; border-bottom: 1px solid {{{account.colors.pms-540}}}; font-weight: bold;" data-max-height="70" class="mob-width">
+                              <p style="font-size: 10.9px; font-family: Arial, Helvetica, sans-serif; line-height: 1.2em; color:{{{account.colors.pms-pantone-black}}};">{{{BA_enter-venue--ei}}}</p>
+                            </td>
+                          </tr>
+                          {{/block.BA_venue--ei}}
+                          {{#block.BA_rsvp--ei}}
+                          <tr>
+                            <td width="41px" background="#ff0000" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 9px; padding-right: 3px; background-color: {{{account.colors.pms-540}}}; border-bottom: 1px solid #ffffff;" class="first-mob-width">
+                              <p style="font-size: 11px; font-family: Arial, Helvetica, sans-serif;  line-height: 1em; font-weight: bold; color:#ffffff;">RSVP:</p>
+                            </td>
+                            <td width="90%" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 12px; border-bottom: 1px solid {{{account.colors.pms-540}}}; font-weight: bold;" data-max-height="70" class="mob-width">
+                              <p style="font-size: 10.9px; font-family: Arial, Helvetica, sans-serif; line-height: 1.2em; color:{{{account.colors.pms-pantone-black}}};">{{{BA_enter-rsvp--ei}}}</p>
+                            </td>
+                          </tr>
+                          {{/block.BA_rsvp--ei}}
+                          {{#block.BA_custom-detail-row--ei}}
+                          <tr>
+                            <td width="41px" background="#ff0000" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 9px; padding-right: 3px; background-color: {{{account.colors.pms-540}}}; border-bottom: 1px solid #ffffff;" data-max-height="70" class="first-mob-width">
+                              <p style="font-size: 11px; font-family: Arial, Helvetica, sans-serif;  line-height: 1em; font-weight: bold; color:#ffffff;">{{{BA_enter-title--ei}}}</p>
+                            </td>
+                            <td width="90%" style="padding-top: 12.5px; padding-bottom: 12.5px; padding-left: 12px; border-bottom: 1px solid {{{account.colors.pms-540}}}; font-weight: bold;" data-max-height="70" class="mob-width">
+                              <p style="font-size: 10.9px; font-family: Arial, Helvetica, sans-serif;  line-height: 1.2em; color:{{{account.colors.pms-pantone-black}}};">{{{BA_enter-details--ei}}}</p>
+                            </td>
+                          </tr>
+                          {{/block.BA_custom-detail-row--ei}}
+                          {{/collection.BA_event-details--ei}}
+                        </table>
+                      </td>
+                    </tr>
+                    <!-- ///EVENT DETAILS : END -->
+
+                    <!-- ###INVITATION BODY TEXT : BEGIN -->
+                    {{#BA_invitation-body-text--ei}}
+                    <tr>
+                      <td style="padding-bottom: 13px;" class="center-on-narrow" data-max-height="60">
+                        <p style="font-size: 10.6px; font-family: Arial, Helvetica, sans-serif;  line-height: 1.8em; color:{{{account.colors.pms-pantone-black}}};">{{{BA_invitation-body-text--ei}}}</p>
+                      </td>
+                    </tr>
+                    {{/BA_invitation-body-text--ei}}
+                    <!-- ///INVITATION BODY TEXT : END -->
+
+                    <!-- ###SIGNOFF : BEGIN -->
+                    {{#BA_signoff--ei}}
+                    <tr>
+                      <td style="padding-bottom: 14px;" class="center-on-narrow" data-max-height="60">
+                        <p style="font-size: 10.6px; font-family: Arial, Helvetica, sans-serif; line-height: 1.5em; color:{{{account.colors.pms-pantone-black}}};">
+                          {{{BA_signoff--ei}}}<br />
+
+                          {{#BA_signoff-firstname--ei}}
+                          <span style="font-weight: bold;">{{{BA_signoff-firstname--ei}}}</span>
+                          {{/BA_signoff-firstname--ei}}
+                          
+                          {{^BA_signoff-firstname--ei}}
+                          <span style="font-weight: bold;">{{{user.first_name}}}</span>
+                          {{/BA_signoff-firstname--ei}}
+                        
+                          {{#BA_signoff-lastname--ei}}
+                          <span style="font-weight: bold;">{{{BA_signoff-lastname--ei}}}</span>
+                          {{/BA_signoff-lastname--ei}}
+                          
+                          {{^BA_signoff-lastname--ei}}
+                          <span style="font-weight: bold;">{{{user.last_name}}}</span>
+                          {{/BA_signoff-lastname--ei}}
+                        </p>
+                        
+                      </td>
+                    </tr>
+                    {{/BA_signoff--ei}}
+                    <!-- ///SIGNOFF : END -->
+
+                    <!-- ###FOOTER LOGOS : BEGIN -->
+                    <tr>
+                      <td align="left" class="center-on-narrow" style="padding-bottom:25px;">
+                        <table align="left" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="margin: auto;" class="center-on-narrow">
+                          <tr>
+                            {{#collection.BA_footer-logos--ei}}
+                            {{#block.BA_footer-logo--ei}}
+                            <td style="padding-right: 15px;">
+                              <img src="{{{BA_enter-logo-image--ei}}}" width="60"  border="0" style="display:block; height: auto;">
+                            </td>
+                            {{/block.BA_footer-logo--ei}}
+                            {{/collection.BA_footer-logos--ei}}
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <!-- ///FOOTER LOGOS : END -->
+
+                    <!--###DEVIDER : BEGIN-->
+                    <!---<tr>
+                      <td bgcolor="#ffffff" valign="top" style="padding-top: 23px; padding-bottom: 17px;">
+                        <table bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0" style="font-size: 13px; font-family: Arial, Helvetica, sans-serif; line-height: 22px; mso-padding-alt: 0px; mso-cellspacing: 0px;">
+                          <tr>
+                            <td height="1px" style="background-color: #999999"></td>
+                          </tr>  
+                        </table>
+                      </td>
+                    </tr>--->
+                    <!--///DEVIDER : END-->
+
+                    <!--###LOGO : BEGIN-->
+                    
+                    <tr>
+                      <td align="left" style="padding-bottom: 14px;" class="mob-pad-right">
+                        <table align="left" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="font-family: Arial, Helvetica, sans-serif; border-collapse: collapse; margin: auto;">
+                          <tr>
+                            <td width="41px" style="padding-bottom: 12.5px; padding-top: 25px; padding-left: 9px; padding-right: 3px; border-top: solid 1px #999999;" class="first-mob-width">                            
+                            </td>
+                            <td width="90%" align="right" style="padding-bottom: 25px; padding-top: 25px; border-top: solid 1px #999999;" class="mob-width">
+                              <img src="https://files.outfit.io/media_library_items/148219/ADB-logo-invitition.png" width="190">
+                            </td>
+                          </tr>
+                          <tr>
+                        </table>
+                      </td>
+                    </tr>
+                    
+                    <tr>
+
+                    </tr>
+                    <!--///LOGO : END-->
+
+                    <!--###TERMS AND CONDITIONS : BEGIN-->
+                    {{#BA_terms-and-conditions--ei}}
+                    <tr>
+                      <td align="left" class="center-on-narrow" data-max-height="50">
+                        <p style="font-size: 6.9px; font-family: Arial, Helvetica, sans-serif; line-height: 7.6px;">{{{BA_terms-and-conditions--ei}}} 
+                        1401514, {{#metadata}}OUT_{{export_id}}{{/metadata}}{{^metadata}}EXPORT ID WILL GO HERE{{/metadata}}.</p>
+                      </td>
+                    </tr>
+                    {{/BA_terms-and-conditions--ei}}
+                    <!--///TERMS AND CONDITIONS : END-->
+
+                  </table>
+                </td>
+              </tr>
+              <!--///MAIN BODY WRAPPER : END-->
+
+            </table>
+          </td>
+        </tr>
+      </table>
+      <!-- Email Body : END -->
+
+    </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+    <script>
+      console.clear();
+      function maxLineCheck(orientation = 'portrait') {
+        const textBlocks = document.querySelectorAll('[data-max-line]');
+
+        textBlocks.forEach(block => {
+          const computedStyle = window.getComputedStyle(block);
+          // Checking if line-height is not set and has a normal value set by default
+          const isNormal = computedStyle.getPropertyValue('line-height') == 'normal';
+          // Getting the font-size of an element that will help us calculate the line-height
+          // if the line-height is set to 'normal'
+          const fontSize = parseFloat(computedStyle.getPropertyValue('font-size'));
+          // If line-height is normal, we multiply the element's font-size with 1.14
+          if ( isNormal ) block.style.lineHeight = (fontSize * 1.14) + 'px';
+          const lineHeight = parseFloat(computedStyle.getPropertyValue('line-height'));
+          const blockHeight = block.scrollHeight;
+          // Getting the data-max-line attribute value (max number of lines allowed)
+          const maxLineAlt = block.dataset.maxLineAlt || block.dataset.maxLine;
+          const maxLine = (orientation == 'portrait') ? block.dataset.maxLine : maxLineAlt;
+          // Setting the element's max-height 
+          const limitHeight = (lineHeight * maxLine) + (lineHeight / 2);
+
+          block.style.maxHeight = limitHeight + 'px';
+          ( blockHeight > limitHeight ) ? block.classList.add('overflow') : block.classList.remove('overflow');
+        });
+      }
+
+      function maxHeightCheck(variation = 'primary') {
+        const textBlocks = document.querySelectorAll('[data-max-height]');
+
+        textBlocks.forEach(block => {
+          const dynamicCheck = block.dataset.maxHeight == 'dynamic' || block.dataset.maxHeightDynamic == 'true';
+          if ( dynamicCheck ) dynamicAssign(block);
+
+          const cssCheck = block.dataset.maxHeight == 'css';
+          const bodyComputedStyle = window.getComputedStyle(document.body);
+          const blockHeight = block.scrollHeight;
+          const unit = block.dataset.maxHeightUnit || 'px';
+          const maxHeightAlt = block.dataset.maxHeightAlt || block.dataset.maxHeight;
+          let maxHeight = (variation == 'primary') ? block.dataset.maxHeight : maxHeightAlt;    
+
+          if ( cssCheck ) {
+            const computedBlockStyle = window.getComputedStyle(block);
+            maxHeight = parseInt(computedBlockStyle.maxHeight);
+          } else {
+            // Setting the element's max-height
+            block.style.maxHeight = maxHeight + unit;
+
+            // Recalculating maxHeight in case 'rem' is set as a unit
+            if ( unit == 'rem' ) maxHeight = maxHeight * parseFloat(bodyComputedStyle.fontSize);      
+          }
+
+          // Adding an 'overflow' class to an element if it's offset height exceedes the max-line-height
+          ( blockHeight > maxHeight ) ? block.classList.add('overflow') : block.classList.remove('overflow');
+        });
+      }
+
+      function dynamicAssign(element) {
+        const container = element.parentNode;
+        container.style.overflow = 'hidden';
+        const containerComputed = {
+          height: parseFloat(window.getComputedStyle(container).height),
+          top: parseFloat(window.getComputedStyle(container).paddingTop),
+          bottom: parseFloat(window.getComputedStyle(container).paddingBottom)
+        };
+        const containerHeight = Math.floor(containerComputed.height - containerComputed.top - containerComputed.bottom);
+        const subtrahends = [...container.querySelectorAll('.js-subtrahend')];
+
+        const subtrahendsHeight = subtrahends.reduce((totalHeight, subtrahend) => {
+          const subtrahendMargins = {
+            top: parseFloat(window.getComputedStyle(subtrahend).marginTop),
+            bottom: parseFloat(window.getComputedStyle(subtrahend).marginBottom)
+          };
+          return totalHeight + subtrahend.offsetHeight + subtrahendMargins.top + subtrahendMargins.bottom;
+        }, 0);
+
+        const dynamicHeight = containerHeight - subtrahendsHeight;
+
+        element.dataset.maxHeightDynamic = 'true';
+        element.dataset.maxHeight = dynamicHeight;
+        container.style.overflow = 'visible';
+      }
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();         
+          maxHeightCheck(); 
+          detectProjectKit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();    
+        maxHeightCheck();
+        detectProjectKit();
+      });
+      
+      
+                          function detectProjectKit() {
+        const isProjectKit = window.parent.document.querySelector(".preview-frame")
+        const overflowFinder = document.querySelectorAll(".overflow");
+        if ( isProjectKit ) {
+          console.log("I'm in preview mode.");
+          for (i = 0; i < overflowFinder.length; ++i) {
+            overflowFinder[i].classList.remove("overflow");
+            console.log("Got " + i);
+          }
+
+        }
+
+      }
+
+      detectProjectKit();
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+    <script>      
+      
+      document.addEventListener('DOMContentLoaded', function(){
+        new Clipboard('.button');
+
+        var isExportPage = window.location.href.indexOf('exports') > -1;
+
+        if (!isExportPage) {
+          document.getElementById('exportEmailInstructionsContainer').style.display = "none";
+        }
+
+        if (isExportPage) {
+
+
+          document.getElementById('email').style.display = "none";
+
+          var parent = document.getElementById("js-exports");
+
+          var htmlClipboard = new Clipboard('.copyHTMLCode', {
+            text: function() {
+              var htmlBlock = document.querySelector('#email').innerHTML;
+              return htmlBlock;
+            }
+          });
+        }
+      });
+
+      function createElement(elType, text, parent){
+        var el = document.createElement(elType);
+        el.innerHTML = text;
+        parent.appendChild(el);
+      }
+
+      function copyToClipboard(){
+        var toggle = false;
+        if(document.getElementById('email').style.display == "none"){
+          document.getElementById('email').style.display = "block";
+          toggle = true;
+        }
+
+        toggleTooltip('copiedConfirmation1');
+
+        var parent = document.getElementsByClassName('exportEmailInstructionsContainer')[0];
+
+        document.getElementById('email').style.display = "block";
+
+        var copyToClipboardBtn = document.createElement("button");
+        copyToClipboardBtn.setAttribute('data-clipboard-target', "#email");
+        copyToClipboardBtn.setAttribute('class', 'tempClickButton');
+        parent.appendChild(copyToClipboardBtn);
+
+        var copyClipboard = new Clipboard('.tempClickButton');
+
+        copyToClipboardBtn.click();
+
+        parent.removeChild(copyToClipboardBtn);
+
+        if(toggle){
+          document.getElementById('email').style.display = "none";
+        }
+      }
+
+      function toggleEmailPreview(){
+        var emailCurrentDisplay = document.getElementById('email').style.display;
+        if(emailCurrentDisplay == "none"){
+          document.getElementById('email').style.display = "block";
+          document.getElementsByClassName('showEmailBtn')[0].innerHTML = "Hide Email Preview";
+        } else {
+          document.getElementById('email').style.display = "none";
+          document.getElementsByClassName('showEmailBtn')[0].innerHTML = "Show Email Preview";
+        }
+      }
+
+      function toggleTooltip(tooltipId){
+        document.getElementById(tooltipId).style.visibility = "visible";
+
+        setTimeout(function(){
+          document.getElementById(tooltipId).style.visibility = "hidden";    
+        }, 3000);
+      }
+
+      function copyHTMLCode(){
+        toggleTooltip('copiedConfirmation2');
+
+        var someHtmlString;
+        someHtmlString = document.getElementById('email').outerHTML;
+
+        // Create a dummy input to copy the string array inside it
+        var dummy = document.createElement("input");
+
+        // Add it to the document
+        document.body.appendChild(dummy);
+
+        // Set its ID
+        dummy.setAttribute("id", "dummy_id");
+
+        // Output the array into it
+        document.getElementById("dummy_id").value=someHtmlString;
+
+        // Select it
+        dummy.select();
+
+        // Copy its contents
+        document.execCommand("copy");
+
+        // Remove it as its not needed anymore
+        document.body.removeChild(dummy);
+      }
+      
+      function injectDate() {
+          const container = document.querySelector('#email');
+          const date = container.querySelector('.js-date');
+
+          date.textContent = new Date().toLocaleDateString('en-AU');
+      }
+
+      injectDate();
+      
+
+    </script>
+  </body>
+</html>
