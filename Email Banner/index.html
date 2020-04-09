@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html data-sign="OSR">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+
+      :root {
+        --white: #fff;
+        --grey: {{{account.colors.15--black-tint}}};
+        --blue: {{{account.colors.pms-540}}};
+      }
+
+      /* Inputs Order
+
+      {{show-crop}}
+      {{placeholder-opacity}}
+      {{placeholder-image-1}}
+      {{placeholder-toggle-new}}
+      {{placeholder-validation}}
+      {{AB_layout-choice--eb}}
+      {{AB_background-image--eb}}
+      {{AB_text-copy--eb}}
+      */
+
+      html {
+        font-family: 'Franklin Gothic SSi';
+        font-weight: 600;
+        word-break: break-word;
+      }
+
+      .fit {
+        top: 3mm;
+        bottom: 3mm;
+        right: 3mm;
+        left: 3mm;
+        display: flex;
+        padding: 10pt 260pt 10pt 35.7pt;
+      }
+
+      .layoutChoice--grey-without-logo .fit,
+      .layoutChoice--grey-with-logo .fit {
+        color: var(--blue);
+      }
+
+      .layoutChoice--blue-without-logo .fit,
+      .layoutChoice--blue-with-logo .fit {
+        color: var(--white);
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 22%;
+        right: 0;
+        overflow: hidden;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .backgroundDecoration {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 35%;
+        left: 0;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      .layoutChoice--grey-without-logo .backgroundDecoration,
+      .layoutChoice--grey-with-logo .backgroundDecoration {
+       /* background-image: url(https://files.outfit.io/media_library_items/148904/Grey-Gradient-Email-Banner.png);*/
+        background: linear-gradient(90deg, rgba(220,221,222,1) 0%, rgba(220,221,222,1) 30%, rgba(220,221,222,0.94) 54%, rgba(220,221,222,0.86) 63%, rgba(220,221,222,0.77) 73%, rgba(220,221,222,0.61) 86%, rgba(220,221,222,0.45) 91%, rgba(220,221,222,0) 100%);
+      }
+
+      .layoutChoice--blue-without-logo .backgroundDecoration,
+      .layoutChoice--blue-with-logo .backgroundDecoration {
+        /*background-image: url(https://files.outfit.io/media_library_items/148903/Blue-Gradient-Email-Banner.png);*/
+        background: linear-gradient(90deg, rgba(0,51,91,1) 0%, rgba(0,51,91,1) 30%, rgba(0,51,91,0.94) 54%, rgba(0,51,91,0.86) 63%, rgba(0,51,91,0.77) 73%, rgba(0,51,91,0.61) 86%, rgba(0,51,91,0.45) 91%, rgba(0,51,91,0) 100%);
+      }
+
+      .PaintStroke {
+        position: absolute;
+        bottom: -66%;
+        right: 0;
+        left: -11%;
+        width: 114%;
+        max-width: unset;
+      }
+
+      .content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .copy {
+        display: flex;
+        align-items: center; 
+        flex: 1;
+        padding-left: 2pt;
+        font-size: 24pt;
+        line-height: 1em;
+      }
+
+      .logo {
+        display: none;
+        width: 122pt;
+        max-height: 35pt;
+        object-fit: contain;
+        object-position: left;
+        margin-top: 10pt;
+      }
+
+      .layoutChoice--grey-with-logo .logo--primary,
+      .layoutChoice--blue-with-logo .logo--secondary {
+        display: block;
+      }
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" class="layoutChoice--{{{AB_layout-choice--eb}}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="backgroundImage">{{{AB_background-image--eb}}}</div><!--backgroundImage-->
+          <div class="backgroundDecoration"></div><!--decoration-->
+          <div class="content">
+            <div class="copy">
+              {{#AB_text-copy--eb}}<div class="copy__inner" data-max-line="3">{{{AB_text-copy--eb}}}</div><!--copy__inner-->{{/AB_text-copy--eb}}
+            </div><!--copy-->
+            <img src="{{{account.logos.logo-primary}}}" class="logo logo--primary"><!--logo--primary-->
+            <img src="{{{account.logos.logo-reversed}}}" class="logo logo--secondary"><!--logo--secondary-->
+          </div><!--content-->
+          <!--  <img class="PaintStroke" src="https://files.outfit.io/media_library_items/149437/ABL-paintstroke1.png"> -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          detectProjectKit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        detectProjectKit();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+      
+            function detectProjectKit() {
+        const isProjectKit = window.parent.document.querySelector(".preview-frame")
+        const overflowFinder = document.querySelectorAll(".overflow");
+        if ( isProjectKit ) {
+          console.log("I'm in preview mode.");
+          for (i = 0; i < overflowFinder.length; ++i) {
+            overflowFinder[i].classList.remove("overflow");
+            console.log("Got " + i);
+          }
+
+        }
+
+      }
+
+      detectProjectKit();
+
+    </script>
+
+  </body>
+</html>
