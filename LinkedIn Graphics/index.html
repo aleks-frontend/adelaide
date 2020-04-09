@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+
+      /* Inputs Order
+      {{show-crop}}
+      {{placeholder-opacity}}
+      {{placeholder-image-1}}
+      {{placeholder-toggle-new}}
+      {{placeholder-validation}}
+      {{AB_layout--lg}}
+      {{AB_layout-position--lg}}
+      {{AB_background-image--lg}}
+      {{AB_text-copy--lg}}
+      */
+
+      :root {
+        --blue-dark: {{{account.colors.pms-540}}};       
+        --blue-light: {{{account.colors.pms-2985}}};
+        --grey:{{{account.colors.15--black-tint}}};
+
+        --white: #fff;
+      }      
+
+      html {
+        font-family: 'Franklin Gothic Demi';
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+        top: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        left: 3mm;
+      }
+
+      .layoutPosition--right .fit {
+        justify-content: flex-end;
+      }
+
+      .layoutPosition--center .fit {
+        justify-content: center;
+      }
+
+      .layoutPosition--left.layout--white-paint .fit,
+      .layoutPosition--right.layout--white-paint .fit {
+        background: var(--white);
+      }
+
+      .layoutPosition--left.layout--blue-paint .fit,
+      .layoutPosition--right.layout--blue-paint .fit {
+        background-color: #00335b;
+      }
+
+      .layoutPosition--left.layout--white-paint .backgroundImage,
+      .layoutPosition--left.layout--blue-paint .backgroundImage {
+        right: 0;
+        left: auto;
+        width: 58%;
+      }
+
+      .layoutPosition--right.layout--white-paint .backgroundImage,
+      .layoutPosition--right.layout--blue-paint .backgroundImage {
+        left: 0;
+        right: auto;
+        width: 58%;
+      }
+
+      .layoutPosition--left.layout--grey-gradient .backgroundImage,
+      .layoutPosition--left.layout--blue-gradient .backgroundImage {  
+        right: 0;
+        left: auto;
+        width: 80%;
+      }
+
+      .layoutPosition--right.layout--grey-gradient .backgroundImage,
+      .layoutPosition--right.layout--blue-gradient .backgroundImage {      
+        left: 0;
+        right: auto;
+        width: 80%;
+      }
+
+      .section {
+        position: relative;
+        display: flex;
+        width: 232pt;
+        padding: 26pt 46pt;
+      }
+
+      .layout--white-paint .section {
+        width: 272pt;
+      }
+
+      .layout--blue-paint .section {
+        width: 275pt;
+        padding: 20pt 55pt;
+      }
+
+      .layout--full-width-grey .section,
+      .layout--full-width-blue .section {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 28.7pt 25pt 40pt;
+      }
+
+      .layout--full-width-grey .section {
+        background: var(--grey);
+      }
+
+      .layout--full-width-blue .section {
+        background: var(--blue-dark);
+      }
+
+      .layout--light-blue-centre .section {
+        justify-content: center;
+        width: 262pt;
+        padding: 37pt 13pt;
+        background: rgba(81, 191, 226, 0.9);
+      }
+
+      .layout--grey-gradient .section,
+      .layout--blue-gradient .section {
+        flex-direction: column;
+        width: 244pt;
+        padding: 14.3pt 39pt 38pt;
+      }
+
+      .layoutPosition--right.layout--grey-gradient .section,
+      .layoutPosition--right.layout--blue-gradient .section {
+        align-items: flex-end;
+      }
+
+      .layoutPosition--center.layout--grey-gradient .section,
+      .layoutPosition--center.layout--blue-gradient .section{
+        align-items: center;
+      }
+
+      .layout--blue-gradient .section {
+        padding-top: 40pt;
+      }
+
+      .layout--light-blue-centre.layoutPosition--left .section {
+        padding: 56pt 16pt 30pt 28pt;
+      }
+
+      .layout--grey-transparent .section {
+        width: 261pt;
+        padding: 23pt 36pt;
+        background: rgba(230, 231, 231, 0.9);
+      }
+
+      .layout--blue-transparent .section {
+        width: 261pt;
+        padding: 23pt 36pt;
+        background: rgba(0, 55, 104, 0.9);
+      }
+
+      .decoration {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      .layoutPosition--right .decoration {
+        right: 0; 
+        transform: rotate(180deg); 
+      }
+
+      .layout--white-paint .decoration {
+        background-image: url(https://files.outfit.io/media_library_items/148925/Central_PaintStroke.png);
+      }
+
+      .layout--blue-paint .decoration {
+        background-image: url(https://files.outfit.io/media_library_items/151282/Central_PaintStroke_blue__2.png);
+      }
+
+      .layoutPosition--center.layout--white-paint .decoration,
+      .layoutPosition--center.layout--blue-paint .decoration {
+        background-position: 50%;
+      }
+
+      .layout--grey-gradient .decoration {
+        /*background-image: url(https://files.outfit.io/media_library_items/148897/silver_gradient-linkedin.png);*/
+        background: linear-gradient(90deg, rgba(220,221,222,1) 0%, rgba(220,221,222,1) 30%, rgba(220,221,222,0.94) 54%, rgba(220,221,222,0.86) 63%, rgba(220,221,222,0.77) 73%, rgba(220,221,222,0.61) 86%, rgba(220,221,222,0.45) 91%, rgba(220,221,222,0) 100%);
+      }
+
+      .layoutPosition--left.layout--grey-gradient .decoration,
+      .layoutPosition--left.layout--blue-gradient .decoration {   
+        right: 35%;
+      }
+
+      .layoutPosition--right.layout--grey-gradient .decoration,
+      .layoutPosition--right.layout--blue-gradient .decoration { 
+        left: 35%;
+      }
+
+      .layout--blue-gradient .decoration {
+        /*background-image: url(https://files.outfit.io/media_library_items/148898/blue_gradient-linkedin.png);*/
+        background: linear-gradient(90deg, rgba(0,51,91,1) 0%, rgba(0,51,91,1) 30%, rgba(0,51,91,0.94) 54%, rgba(0,51,91,0.86) 63%, rgba(0,51,91,0.77) 73%, rgba(0,51,91,0.61) 86%, rgba(0,51,91,0.45) 91%, rgba(0,51,91,0) 100%);
+      }
+
+      .layoutPosition--center.layout--blue-gradient .decoration {
+        left: 17.5%;
+        right: 17.5%;
+        /*background-image: url(https://files.outfit.io/media_library_items/148926/Central_Gradient.png);*/
+        background: linear-gradient(90deg, rgba(0,51,91,0) 0%, rgba(0,51,91,0.96) 10%, rgba(0,51,91,0.97) 25%, rgba(0,51,91,0.98) 35%, rgba(0,51,91,1) 50%, rgba(0,51,91,0.98) 65%, rgba(0,51,91,0.97) 75%, rgba(0,51,91,0.96) 90%, rgba(0,51,91,0) 100%);
+      }
+
+      .layoutPosition--center.layout--grey-gradient .decoration {
+        left: 17.5%;
+        right: 17.5%;
+        /*background-image: url(https://files.outfit.io/media_library_items/148906/Central_Gradient_WHITE-linkedin.svg);*/
+        background: linear-gradient(90deg, rgba(220,221,222,0) 0%, rgba(220,221,222,0.96) 10%, rgba(220,221,222,0.97) 25%, rgba(220,221,222,0.98) 35%, rgba(220,221,222,1) 50%, rgba(220,221,222,0.98) 65%, rgba(220,221,222,0.97) 75%, rgba(220,221,222,0.96) 90%, rgba(220,221,222,0) 100%);
+      }
+
+      .copy {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        font-size: 33.8pt;
+        line-height: 0.95em;
+        color: var(--blue-dark);
+      }
+
+      .layoutPosition--right .copy {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .layoutPosition--center .copy {
+        justify-content: center;
+        font-size: 35.1pt;
+        text-align: center; 
+      }
+
+      .layout--blue-paint .copy {
+        font-size: 34.3pt;
+        color: var(--white);
+      }
+
+      .layout--full-width-grey .copy,
+      .layout--full-width-blue .copy {
+        flex: 1;
+        font-size: 37.9pt;
+        line-height: 0.95em;
+        text-align: center;
+      }
+
+      .layout--full-width-grey .copy {
+        color: var(--blue-dark);
+      }
+
+      .layout--full-width-blue .copy {
+        color: var(--white);
+      }
+
+      .layout--blue-transparent .copy {
+        font-size: 35.8pt;
+        line-height: 0.85em;
+        color: var(--white);
+      }
+
+      .layout--grey-gradient .copy,
+      .layout--blue-gradient .copy {
+        flex: 1;
+        font-size: 31.5pt;
+        line-height: 0.9em;
+      }
+
+      .layout--blue-gradient .copy {
+        color: var(--white);
+      }
+      
+      .layout--blue-gradient .copy__inner,
+      .layout--grey-gradient .copy__inner,
+      .layout--full-width-grey .copy__inner,
+      .layout--full-width-blue .copy__inner
+      {
+        max-height: 225px;
+      }
+      
+      .layout--white-paint .copy__inner,
+      .layout--blue-paint .copy__inner,
+      .layout--blue-transparent .copy__inner, 
+      .layout--grey-transparent .copy__inner, 
+      .layout--light-blue-centre .copy__inner {
+        max-height: 275px;
+      }
+
+      .layout--light-blue-centre .copy,
+      .layout--grey-transparent .copy,
+      .layout--blue-transparent .copy {
+        justify-content: center;
+        text-align: center;     
+      }
+
+      .logo {
+        width: 158pt;
+        display: none;
+      }
+
+      .layout--full-width-grey .logo--primary,
+      .layout--full-width-blue .logo--secondary,
+      .layout--grey-gradient .logo--primary,
+      .layout--blue-gradient .logo--secondary {
+        display: block;
+      }
+
+      .layout--grey-gradient .logo--primary,
+      .layout--blue-gradient .logo--secondary  {
+        width: 161pt;
+        margin-top: 35pt;
+      }
+
+      .layout--full-width-grey .logo--primary,
+      .layout--full-width-blue .logo--secondary {
+        margin-top: 30pt;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" 
+        class="layout--{{{AB_layout--lg}}}
+               layoutPosition--{{{AB_layout-position--lg}}}{{^AB_layout-position--lg}}left{{/AB_layout-position--lg}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="backgroundImage"><div class="reposition-fix">{{{AB_background-image--lg}}}</div></div><!--backgroundImage-->
+          <div class="decoration"></div><!--decoration-->
+
+          <div class="section">
+            <div class="copy">
+              <div class="copy__inner" data-max-height="css">{{{AB_text-copy--lg}}}</div><!--copy__inner-->
+            </div><!--copy-->
+            <img class="logo logo--primary" src="{{{account.logos.logo-primary}}}"><!--logo-->
+            <img class="logo logo--secondary" src="{{{account.logos.logo-reversed}}}"><!--logo-->
+          </div><!--section-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          detectProjectKit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        detectProjectKit();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      
+                  function detectProjectKit() {
+        const isProjectKit = window.parent.document.querySelector(".preview-frame")
+        const overflowFinder = document.querySelectorAll(".overflow");
+        if ( isProjectKit ) {
+          console.log("I'm in preview mode.");
+          for (i = 0; i < overflowFinder.length; ++i) {
+            overflowFinder[i].classList.remove("overflow");
+            console.log("Got " + i);
+          }
+
+        }
+
+      }
+
+      detectProjectKit();
+
+    </script>
+
+
+  </body>
+</html>
