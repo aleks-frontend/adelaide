@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html data-sign="OSZ">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+
+      :root {
+        --blue: {{{account.colors.pms-540}}};
+        --light-blue: {{{account.colors.pms-2985}}};
+        --white: #fff;
+        --black: {{{account.colors.pms-pantone-black}}};
+        --grey: {{{account.colors.15--black-tint}}};
+      }
+
+      /* Inputs Order
+
+      {{show-crop}}
+      {{{AB_document-theme--rf}}}
+      {{{AB_hero-image--rf}}}
+      {{{AB_heading--rf}}}
+      {{{AB_full-width-text-top--rf}}}
+      {{{AB_column-title-left--rf}}}
+      {{{AB_rate-left--rf}}}
+      {{{AB_loan-to-value-ratio-left--rf}}}
+      {{{AB_rate-second-left--rf}}}
+      {{{AB_loan-to-value-ratio-second-left--rf}}}
+      {{{AB_column-text-left--rf}}}
+      {{{AB_column-title-right--rf}}}
+      {{{AB_rate-right--rf}}}
+      {{{AB_loan-to-value-ratio-right--rf}}}
+      {{{AB_rate-second-right--rf}}}
+      {{{AB_loan-to-value-ratio-second-right--rf}}}
+      {{{AB_column-text-right--rf}}}
+      {{{AB_full-width-text-bottom--rf}}}
+      {{{AB_terms--rf}}}
+
+      */
+
+      html {
+        font-family: 'Franklin Gothic Demi';
+        word-break: break-word;
+        color: var(--black);
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }   
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+      }
+
+      .documentTheme--1-rate .header {
+        height: 350pt;
+        padding: 81pt 51pt;
+      }
+
+      .documentTheme--2-rates .header {
+        flex-shrink: 0;
+        height: 347.8pt;
+        padding: 81pt 51pt;
+      }
+
+      .heading {
+        width: 340pt;
+        font-size: 36.3pt;
+        line-height: 1.05em;
+        color: var(--blue);
+        z-index: 2;
+      }
+
+      .gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(90deg, rgba(220,221,222,1) 0%,rgba(220,221,222,1) 18%, rgba(220,221,222,0.9) 35%, rgba(220,221,222,0.7) 50%, rgba(220,221,222,0) 100%);
+      }
+
+      .decoration {
+        position: absolute;
+        left: -1%;
+        bottom: 0pt;
+        width: 102%;
+        max-width: unset;
+      }
+      
+      .body__inner {
+        max-height: 530px;
+      }
+
+      .body {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        position: relative;
+      }
+
+      .documentTheme--1-rate .body {
+        padding: 19pt 48pt 0pt 73pt;
+      }
+
+      .documentTheme--2-rates .body {
+        padding: 0pt 48pt 0pt 73pt;
+      }
+
+      .column {
+        display: flex;
+      }
+
+      .documentTheme--1-rate .column {
+        margin-bottom: 38.5pt;
+      }
+
+      .documentTheme--2-rates .column {
+        margin-bottom: 26pt;
+      }
+
+      .title__container {
+        display: flex;
+      }
+      
+      .no-column-title-left.no-column-title-right .title__container {
+        display: none;
+      }
+
+      .documentTheme--1-rate .title__container {
+        margin-bottom: 14pt;
+      }
+
+      .documentTheme--2-rates .title__container {
+        margin-bottom: 25pt;
+      }
+
+      .title {
+        color: var(--blue);
+      }
+
+      .documentTheme--1-rate .title {
+        font-size: 25.8pt;
+      }
+
+      .documentTheme--2-rates .title {
+        font-size: 22.1pt;
+      }
+
+      .documentTheme--1-rate .title--primary {
+        width: 235pt;
+        margin-right: 26pt;
+      }
+
+      .documentTheme--2-rates .title--primary {
+        width: 228pt;
+        margin-right: 38pt;
+        margin-left: 6pt;
+      }
+      
+      .fullWidthTextTop {
+        font-size: 21pt;
+        line-height: 1.3em;
+        margin-bottom: 15pt;
+        color: var(--blue);
+      }
+      
+      .fullWidthTextBottom {
+        font-family: 'Franklin Gothic Book';
+        font-size: 12.2pt;
+        line-height: 1.4em;
+        font-weight: 500;
+        color: var(--blue);
+      }
+      
+      .fullWidthTextBottom strong {
+        font-family: 'Franklin Gothic Demi';
+      }
+
+      .rate__container {
+        position: relative;
+      }
+
+      .documentTheme--1-rate .rate__container--primary {
+        width: 235pt;
+        margin-right: 26pt;
+        padding-right: 10pt;
+      }
+
+      .documentTheme--2-rates .rate__container--primary {
+        width: 228pt;
+        margin-left: 6pt;
+        margin-right: 39pt;
+        padding-right: 10pt;
+      }
+
+      .rate__container--primary:after {
+        content: '';
+        position: absolute;
+        width: 2pt;
+        right: 0;
+        top: 3%;
+        bottom: 0%;
+        background-color: var(--light-blue);
+      }
+
+      .rate {
+        display: none;
+      }
+
+      .rate--primary,
+      .documentTheme--2-rates .rate--secondary {
+        display: block;
+      }
+
+      .documentTheme--2-rates .rate + .rate {
+        margin-top: 19pt;         
+      }
+
+      .rate__label,
+      .rate__value {
+        color: var(--light-blue);
+      }
+
+      .documentTheme--1-rate .rate__label {
+        margin-bottom: 3pt;
+        font-size: 55.4pt;
+        line-height: 1.2em;
+      }
+
+      .documentTheme--2-rates .rate__label {
+        margin-bottom: 2pt;
+        font-size: 47.7pt;
+        line-height: 1em;
+      }
+
+      .rate__value {
+        font-family: 'Franklin Gothic';
+        font-weight: 500;
+      }
+
+      .documentTheme--1-rate .rate__value {
+        font-size: 16.5pt;
+        line-height: 1.2em;
+      }
+
+      .documentTheme--2-rates .rate__value {
+        font-size: 14.2pt;
+        line-height: 1.2em;
+      }
+
+      .text__container {
+        display: flex;
+        margin-bottom: 15pt;
+      }
+      
+      .text__container:last-child {
+        margin-bottom: 0;
+      }
+      
+      .no-column-text-left.no-column-text-right .text__container {
+        display: none;
+      }
+
+      .text {
+        color: var(--blue);
+        font-family: 'Franklin Gothic Book';
+        font-weight: 500;
+        line-height: 1.4em;
+      }
+
+      .text--primary {
+        flex-shrink: 0;
+      }
+
+      .documentTheme--1-rate .text--primary {
+        width: 235pt;
+        margin-right: 30pt;
+      }
+
+      .documentTheme--2-rates .text--primary {
+        width: 228pt;
+        margin-right: 37pt;
+      }
+
+      .text ul {
+        margin-bottom: 6pt;
+        padding-left: 5pt;    
+        list-style-type: "- ";
+      }
+
+      .documentTheme--1-rate .text {
+        font-size: 11.6pt;
+      }
+
+      .documentTheme--2-rates .text  {
+        font-size: 10.5pt;
+      }
+
+      .documentTheme--1-rate .text p {
+        margin-bottom: 7pt;
+      }
+
+      .documentTheme--1-rate .text li,
+      .documentTheme--2-rates .text li {
+        margin-bottom: 6pt;
+      }
+
+      .documentTheme--2-rates .text p {
+        margin-bottom: 5pt;
+      }
+
+      .text strong {
+        font-weight: 500;
+        font-family: 'Franklin Gothic Demi';
+      }
+
+      .title:last-child,
+      .rate__label:last-child,
+      .rate__value:last-child,
+      .text ul:last-child,
+      .text p:last-child,
+      .text li:last-child {
+        margin-bottom: 0;
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        position: relative;
+        padding: 20pt 46pt 26pt 51pt;
+      }
+
+      .documentTheme--1-rate .footer {
+        padding: 20pt 46pt 26pt 51pt;
+      }
+
+      .documentTheme--2-rates .footer {
+        padding: 10pt 46pt 26pt 51pt;
+      }
+
+      .footer__top {
+        margin-bottom: 20pt;
+        font-size: 0;
+      }
+
+      .footer__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .logo {
+        flex-shrink: 0;
+      }
+
+      .logo--primary {
+        width: 170pt;
+      }
+
+      .logo--secondary {
+        width: 191pt;
+      }
+
+      .terms {
+        width: 298pt;
+        margin-right: 25pt;
+        font-size: 7.3pt;
+        font-weight: 500;
+        font-family: 'Franklin Gothic Book';
+        line-height: 1.1em;
+      }
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .column:emtpy {
+        display: none;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" class="documentTheme--{{{AB_document-theme--rf}}}{{^AB_document-theme--rf}}1-rate{{/AB_document-theme--rf}}
+                                                                   {{^AB_column-title-left--rf}}no-column-title-left{{/AB_column-title-left--rf}}
+                                                                   {{^AB_column-title-right--rf}}no-column-title-right{{/AB_column-title-right--rf}}
+                                                                   {{^AB_column-text-left--rf}}no-column-text-left{{/AB_column-text-left--rf}}
+                                                                   {{^AB_column-text-right--rf}}no-column-text-right{{/AB_column-text-right--rf}}">
+
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="header">
+            <div class="heroImage"><div class="reposition-fix">{{{AB_hero-image--rf}}}</div></div> <!--heroImage-->
+            <div class="gradient"></div><!--gradient-->
+            <img class="decoration" src="https://files.outfit.io/media_library_items/149826/ABL-Outfit-Template-A4_Invite_portrait3-01.svg" /> <!--decoration-->   
+            {{#AB_heading--rf}}
+            <div class="heading" data-max-line="2">{{{AB_heading--rf}}}</div> <!--heading-->
+            {{/AB_heading--rf}}
+          </div> <!--header-->
+          <div class="body">
+            <div class="body__inner" data-max-height="css">
+              {{#AB_full-width-text-top--rf}}
+              <div class="fullWidthTextTop">{{{AB_full-width-text-top--rf}}}</div>
+              {{/AB_full-width-text-top--rf}}
+              <div class="title__container">
+                <div class="title title--primary">{{{AB_column-title-left--rf}}}</div> <!--column__title-->
+                {{#AB_column-title-right--rf}}
+                <div class="title title--secondary">{{{AB_column-title-right--rf}}}</div> <!--column__title-->
+                {{/AB_column-title-right--rf}}
+              </div> <!--title__container-->
+              <div class="column">
+                <div class="rate__container rate__container--primary">
+                  <div class="rate rate--primary">
+                    {{#AB_rate-left--rf}}
+                    <div class="rate__label">{{{AB_rate-left--rf}}}</div> <!--rate__label-->
+                    {{/AB_rate-left--rf}}
+                    {{#AB_loan-to-value-ratio-left--rf}}
+                    <div class="rate__value">{{{AB_loan-to-value-ratio-left--rf}}}</div> <!--rate__label-->
+                    {{/AB_loan-to-value-ratio-left--rf}}
+                  </div> <!--rate-->
+                  <div class="rate rate--secondary">
+                    {{#AB_rate-second-left--rf}}
+                    <div class="rate__label">{{{AB_rate-second-left--rf}}}</div> <!--rate__label-->
+                    {{/AB_rate-second-left--rf}}
+                    {{#AB_loan-to-value-ratio-second-left--rf}}
+                    <div class="rate__value">{{{AB_loan-to-value-ratio-second-left--rf}}}</div> <!--rate__label-->
+                    {{/AB_loan-to-value-ratio-second-left--rf}}
+                  </div> <!--rate-->
+                </div> <!--rate__container-->
+                <div class="rate__container rate__container--secondary">
+                  <div class="rate rate--primary">
+                    {{#AB_rate-right--rf}}
+                    <div class="rate__label">{{{AB_rate-right--rf}}}</div> <!--rate__label-->
+                    {{/AB_rate-right--rf}}
+                    {{#AB_loan-to-value-ratio-right--rf}}
+                    <div class="rate__value">{{{AB_loan-to-value-ratio-right--rf}}}</div> <!--rate__label-->
+                    {{/AB_loan-to-value-ratio-right--rf}}
+                  </div> <!--rate-->
+                  <div class="rate rate--secondary">
+                    {{#AB_rate-second-right--rf}}
+                    <div class="rate__label">{{{AB_rate-second-right--rf}}}</div> <!--rate__label-->
+                    {{/AB_rate-second-right--rf}}
+                    {{#AB_loan-to-value-ratio-second-right--rf}}
+                    <div class="rate__value">{{{AB_loan-to-value-ratio-second-right--rf}}}</div> <!--rate__label-->
+                    {{/AB_loan-to-value-ratio-second-right--rf}}
+                  </div> <!--rate-->
+                </div> <!--rate__container-->
+              </div> <!--column-->
+              <div class="text__container">
+                <div class="text text--primary">{{{AB_column-text-left--rf}}}</div> <!--text-->
+                {{#AB_column-text-right--rf}}
+                <div class="text text--secondary">{{{AB_column-text-right--rf}}}</div> <!--text-->
+                {{/AB_column-text-right--rf}}
+              </div> <!--text__container-->
+              {{#AB_full-width-text-bottom--rf}}
+              <div class="fullWidthTextBottom">{{{AB_full-width-text-bottom--rf}}}</div>
+              {{/AB_full-width-text-bottom--rf}}
+            </div> <!--body__inner-->
+          </div> <!--body-->
+          <div class="footer">
+            <div class="footer__top">
+              <img class="logo logo--primary" src="{{{account.logos.logo-primary}}}"/> <!--logo--primary-->
+            </div> <!--footer__top-->
+            <div class="footer__bottom">
+              <div class="terms">
+                <span>{{{account.snippets.adelaide-abn}}},</span>
+              {{#AB_terms--rf}}
+                <span>{{{AB_terms--rf}}}, </span> 
+                <span>1393430, </span>
+                <span>{{#metadata}}OUT_{{export_id}}{{/metadata}}{{^metadata}}EXPORT ID WILL GO HERE{{/metadata}}, </span>
+                <span class="metadata__item js-date"></span>
+              {{/AB_terms--rf}}
+              </div> <!--terms-->
+              <img class="logo logo--secondary" src="https://files.outfit.io/media_library_items/148219/ADB-logo-invitition.png" /> <!--logo--secondary-->
+            </div> <!--footer__bottom-->
+          </div> <!--footer-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          detectProjectKit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      function injectDate() {
+          const container = document.querySelector('.fit');
+          const date = container.querySelector('.js-date');
+
+          date.textContent = new Date().toLocaleDateString('en-AU');
+      }
+
+      injectDate();
+      
+      
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        detectProjectKit();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+      
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+                          function detectProjectKit() {
+        const isProjectKit = window.parent.document.querySelector(".preview-frame")
+        const overflowFinder = document.querySelectorAll(".overflow");
+        if ( isProjectKit ) {
+          console.log("I'm in preview mode.");
+          for (i = 0; i < overflowFinder.length; ++i) {
+            overflowFinder[i].classList.remove("overflow");
+            console.log("Got " + i);
+          }
+
+        }
+
+      }
+
+      detectProjectKit();
+
+    </script>
+
+
+  </body>
+</html>
