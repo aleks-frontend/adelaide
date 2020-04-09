@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+  <html data-sign="OSR">
+    <head>
+      <title>Template title</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <link rel="stylesheet" type="text/css" href="css/minireset.css">
+      <link rel="stylesheet" type="text/css" href="css/main.css">
+      <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+      <style>
+        @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+        @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+
+        :root {
+          --blue: {{{account.colors.pms-540}}};
+          --white: #fff;
+        }
+
+        /* Inputs Order
+
+        {{show-crop}}
+        {{placeholder-opacity}}
+        {{placeholder-image-1}}
+        {{placeholder-toggle-new}}
+        {{placeholder-validation}}
+        {{AB_hero-image--ip}}
+        {{AB_logo--ip}}
+        {{AB_heading--ip}}
+        {{AB_subheading--ip}}
+        {{#collection.AB_event-details--ip}}{{/collection.AB_event-details--ip}}
+        {{AB_invitation-body-text--ip}}
+        {{AB_signoff--ip}}
+        {{#collection.AB_footer-logos--ip}}{{/collection.AB_footer-logos--ip}}
+        {{AB_terms-and-conditions--ip}}
+        */
+
+        html {
+          font-family: 'Franklin Gothic Demi';
+          word-break: break-word;
+        }
+
+        .fit {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .header {
+          position: relative;
+          height: 218.26pt;
+          padding: 77.2pt 65.3pt 0;
+        }
+
+        .heroImage {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 24%;
+          right: 0;
+          overflow: hidden;
+        }
+
+        .heroImage div {
+          width: auto !important;
+          height: auto !important;
+          right: 0;
+          bottom: 0;
+        }      
+
+        /* Helper classes */
+        .u-hide { display: none; }
+
+        /* Helper class for fixing Reposition tool bug */
+        .reposition-fix {
+          position: absolute;
+          overflow: hidden;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;        
+        }
+
+        .reposition-fix div {
+          top: 0 !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+
+        .gradient {
+          position: absolute;
+          top:0;
+          right:0;
+          left:0;
+          bottom:0;
+        }
+
+        .gradient {
+          background: linear-gradient(90deg, rgba(220,221,222,1) 0%, rgba(220,221,222,1) 25%, rgba(220,221,222,0.868) 46%, rgba(220,221,222,0.0984) 100%);
+        }
+
+        .decoration {
+          position: absolute;
+          left: -1%;
+          bottom: 0pt;
+          width: 102%;
+          max-width: unset;
+        }
+
+        .header__logo {
+          position: relative;
+          width: 171pt;
+        }      
+
+        .body {
+          flex: 1;
+          padding: 24pt 65pt 0;
+        }
+
+        .heading {
+          margin-bottom: 17.1pt;
+          font-size: 36.7pt;
+          line-height: 0.95em;
+          letter-spacing: 0.45pt;
+          color: var(--blue);
+        }
+
+        .subheading {
+          margin-bottom: 12pt;
+          font-size: 12pt;
+          font-family: 'Franklin Gothic Book';
+          line-height: 1.3em;
+          font-weight: 600;
+          color: var(--blue);
+        }
+
+        .table {
+          width: 100%;
+          margin-bottom: 13pt;
+          border-width: 1pt 0 1pt 0;
+          border-style: solid;
+          border-color: var(--blue);
+        }
+
+        .table__cell {
+          padding: 9.1pt 0;
+          font-size: 10pt;
+          line-height: 1.6em;
+        }
+
+        .table__cell--label {
+          padding-left: 8pt;
+          padding-right: 5pt;
+          width: 49.9pt;
+          font-family: 'Franklin Gothic';
+          font-weight: 500;
+          border-bottom: 1pt solid var(--white);
+          background-color: var(--blue);
+          color: var(--white);
+        }
+
+        .table__cell--value {
+          padding-left: 11pt;
+          padding-right: 11pt;
+          border-bottom: 1pt solid var(--blue);
+        }
+
+        .table tr:last-child td.table__cell--label {
+          border-bottom: none;
+        }
+
+        .u-font-weight-normal.table__cell--value {
+          font-family: 'Franklin Gothic Book';
+          font-weight: normal;
+        }
+
+        .text {
+          margin-bottom: 30pt;
+        }
+
+        .text:last-child {
+          margin-bottom: 0;
+        }
+
+        .text,
+        .signOff {
+          font-family: 'Franklin Gothic Book';
+          font-size: 9.8pt;
+          line-height: 1.8em;
+        }
+
+        .footer {
+          display: flex;
+          flex-direction: column;
+          padding: 0 65pt 34pt;
+        }
+
+        .logo__container {
+          display: flex;
+          margin-left: -20pt;
+        }
+
+        .logo {
+          height: 75pt;
+          max-width: 120.47pt;
+          object-fit: contain;
+          object-position: left bottom;
+          margin-left: 20pt;
+        }
+
+        .footer__bottom {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 22pt;
+        }
+
+        .terms {
+          flex: 1;
+          margin-right: 25pt;
+          font-family: 'Franklin Gothic Book';
+          font-size: 7.2pt;
+          line-height: 1.2em;
+        }
+
+        .footer__logo {
+          width: 190.8pt;
+        }
+
+
+        /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+      </style>
+    </head>
+    <body style="background: white" data-crop="{{show-crop}}">
+      <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+        <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      </div><!-- end placeholderMaster -->
+      <div class="page">
+
+        <div class="bleed">
+
+          <div class="container fit">
+            <div class="header">
+
+              <div class="heroImage">
+                <div class="reposition-fix">{{{AB_hero-image--ip}}}</div><!--reposition-fix-->
+              </div><!--heroImage-->
+              <div class="gradient"></div><!--gradient-->
+              <img class="decoration" src="https://files.outfit.io/media_library_items/149826/ABL-Outfit-Template-A4_Invite_portrait3-01.svg"/><!--decoration-->          
+              <img src="{{{AB_logo--ip}}}" class="header__logo"><!--header__logo-->         
+            </div><!--header-->
+            <div class="body">
+              <div class="bodyInner">
+                {{#AB_heading--ip}}
+                <div class="heading" data-max-line="2">{{{AB_heading--ip}}}</div><!--heading-->
+                {{/AB_heading--ip}}
+                {{#AB_subheading--ip}}
+                <div class="subheading" data-max-line="2">{{{AB_subheading--ip}}}</div><!--subheading-->
+                {{/AB_subheading--ip}}
+                <table class="table">
+                  {{#collection.AB_event-details--ip}}
+                  {{#block.AB_date--ip}}
+                  <tr>
+                    <td class="table__cell table__cell--label">Date:</td>
+                    <td class="table__cell table__cell--value" data-max-height="50">{{{date}}}</td>
+                  </tr>
+                  {{/block.AB_date--ip}}
+                  {{#block.AB_time--ip}}
+                  <tr>
+                    <td class="table__cell table__cell--label">Time:</td>
+                    <td class="table__cell table__cell--value" data-max-height="50">{{{time}}}</td>
+                  </tr>
+                  {{/block.AB_time--ip}}
+                  {{#block.AB_venue--ip}}
+                  <tr>
+                    <td class="table__cell table__cell--label">Venue:</td>
+                    <td class="table__cell table__cell--value u-font-weight-normal" data-max-height="90">{{{venue}}}</td>
+                  </tr>
+                  {{/block.AB_venue--ip}}
+                  {{#block.AB_rsvp--ip}}
+                  <tr>
+                    <td class="table__cell table__cell--label">RSVP:</td>
+                    <td class="table__cell table__cell--value u-font-weight-normal" data-max-height="90">{{{rsvp}}}</td>
+                  </tr>
+                  {{/block.AB_rsvp--ip}}
+                  {{#block.AB_custom-detail-row--ip}}
+                  <tr>
+                    <td class="table__cell table__cell--label" data-max-height="90">{{{title}}}</td>
+                    <td class="table__cell table__cell--value u-font-weight-normal" data-max-height="90">{{{details}}}</td>
+                  </tr>
+                  {{/block.AB_custom-detail-row--ip}}
+                  {{/collection.AB_event-details--ip}}
+                </table><!--table-->
+                {{#AB_invitation-body-text--ip}}
+                <div class="text" data-max-line="2">{{{AB_invitation-body-text--ip}}}</div><!--text-->
+                {{/AB_invitation-body-text--ip}}        
+                <div class="signOff" data-max-line="2">{{{AB_signoff--ip}}}<br/>
+                  <span style="font-family: 'Franklin Gothic Demi';">
+                    {{#AB_first-name--ip}}<span>{{{AB_first-name--ip}}}</span>{{/AB_first-name--ip}}
+                    {{^AB_first-name--ip}}<span>{{{user.first_name}}}</span>{{/AB_first-name--ip}} 
+                    
+                    {{#AB_last-name--ip}}<span>{{{AB_last-name--ip}}}</span>{{/AB_last-name--ip}}
+                    {{^AB_last-name--ip}}<span>{{{user.last_name}}}</span>{{/AB_last-name--ip}}
+                  </span>
+                </div><!--signOff-->     
+              </div><!--bodyInner-->
+            </div><!--body-->
+            <div class="footer">
+              <div class="logo__container">
+                {{#collection.AB_footer-logos--ip}}
+                {{#block.AB_footer-logo--ip}}
+                <img src="{{{enter-logo-image}}}" class="logo"><!--logo-->
+                {{/block.AB_footer-logo--ip}}
+                {{/collection.AB_footer-logos--ip}}
+              </div><!--logo__container-->
+              <div class="footer__bottom">
+                <div class="terms" data-max-height="40">
+                  <span class="metadata__item">{{{account.snippets.adelaide-abn}}}</span>
+                  <span class="metadata__item">1393426, </span>
+                  <span class="metadata__item">{{#metadata}}OUT_{{export_id}}{{/metadata}}{{^metadata}}EXPORT ID WILL GO HERE{{/metadata}},</span>
+                  <span class="metadata__item js-date"></span>
+                </div><!--terms-->
+                <img src="https://files.outfit.io/media_library_items/148219/ADB-logo-invitition.png" class="footer__logo"><!--footer__logo-->
+              </div><!--footer__bottom-->
+            </div><!--footer-->
+          </div><!--container fit-->
+
+        </div><!--bleed-->
+
+      </div><!--page-->
+
+
+      <script>
+        window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+      </script>
+      <script src="js/main.js"></script>   
+      <script src="js/prefixfree.js"></script>
+      <script src="js/placeholder-controller.js"></script>
+      <script src="js/char-limit.js"></script>
+      <script src="js/check-export-mode.js"></script>
+      <script src="js/max-line-check.js"></script>
+      <script src="js/max-height-check.js"></script>
+      <script src="js/hide-empty-titles.js"></script>
+      <script src="js/custom-rich-text.js"></script>
+      <script src="js/dynamic-inject.js"></script>
+      <script src="js/text-fit-min.js"></script>
+      <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+      <script>
+        {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+        {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+      </script>
+      <script>
+
+        console.clear();
+
+        // Tracking text changes and firing text restriction functions (mutationObserver)
+        const overflowObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            maxLineCheck();
+            maxHeightCheck();
+            charLimit();
+            detectProjectKit();
+            hideEmptyTitles();
+          });
+        });
+
+        const injectObserver = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            injectDynamicContent();
+          });
+        });      
+
+        const injectSources = document.querySelectorAll('[data-target-id]');
+
+        overflowObserver.observe(document.body, {
+          attributes: false,
+          characterData: true,
+          childList: true,
+          subtree: true,
+          attributeOldValue: false,
+          characterDataOldValue: true
+        });
+
+        if ( injectSources.length > 0 ) {
+          injectSources.forEach(src => {
+            injectObserver.observe(src, {
+              attributes: false,
+              characterData: true,
+              childList: true,
+              subtree: true,
+              attributeOldValue: false,
+              characterDataOldValue: true
+            });            
+          });
+        }    
+
+        // Calling text size restriction functions once the fonts are loaded
+        document.fonts.ready.then(() => {
+          maxLineCheck();
+          maxHeightCheck();
+          detectProjectKit();
+          injectDynamicContent();
+          hideEmptyTitles();
+        });
+
+        function injectDate() {
+          const container = document.querySelector('.fit');
+          const date = container.querySelector('.js-date');
+
+          date.textContent = new Date().toLocaleDateString('en-AU');
+        }
+
+      injectDate();
+        
+        placeholderController();
+        checkCrop();
+        checkExport();
+        charLimit();
+
+        // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+        TextFit.fit({
+          selector: '.textFit'
+        });
+        
+              function detectProjectKit() {
+        const isProjectKit = window.parent.document.querySelector(".preview-frame")
+        const overflowFinder = document.querySelectorAll(".overflow");
+        if ( isProjectKit ) {
+          console.log("I'm in preview mode.");
+          for (i = 0; i < overflowFinder.length; ++i) {
+            overflowFinder[i].classList.remove("overflow");
+            console.log("Got " + i);
+          }
+
+        }
+
+      }
+
+      detectProjectKit();
+
+
+      </script>
+
+
+    </body>
+  </html>
