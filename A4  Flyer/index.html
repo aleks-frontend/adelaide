@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html data-sign="OSZ">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+
+      :root {
+        --blue: {{{account.colors.pms-540}}};
+        --light-blue: {{{account.colors.pms-2985}}};
+        --white: #fff;
+        --black: {{{account.colors.pms-pantone-black}}};
+        --grey: {{{account.colors.15--black-tint}}};
+      }
+
+      /* Inputs Order
+
+      {{show-crop}}
+      {{{AB_hero-image--a4f}}}
+      {{{AB_heading--a4f}}}
+      {{{AB_subheading--a4f}}}
+      {{#collection.AB_body-content--a4f}}{{/collection.AB_body-content--a4f}}
+      {{{AB_first-name--a4f}}}
+      {{{AB_surname--a4f}}}
+      {{{AB_title--a4f}}}
+      {{{AB_telephone--a4f}}}
+      {{{AB_mobile-number--a4f}}}
+      {{{AB_email-address--a4f}}}
+      {{{AB_partner-assist--a4f}}}
+      {{{AB_broker-website--a4f}}}
+      {{{AB_heading-side-back--a4f}}}
+      {{#collection.AB_body-content-side-back--a4f}}{{/collection.AB_body-content-side-back--a4f}}
+      {{{AB_terms-and-conditions--a4f}}}
+
+      */
+
+      html {
+        font-family: 'Franklin Gothic Demi';
+        word-break: break-word;
+        color: var(--black);
+      }
+
+      .heroImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .heroImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }    
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .fit--backPage {
+        padding: 62pt 65pt 31pt;
+      }
+
+      .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        flex-shrink: 0;
+        position: relative;
+        height: 225pt;
+        padding: 55pt 65pt;
+      }
+
+      .header__heading {
+        font-size: 30.5pt;
+        line-height: 1.2em;
+        color: var(--blue);
+        z-index: 2;
+      }
+
+      .decoration {
+        position: absolute;
+        left: -1%;
+        bottom: 0pt;
+        width: 102%;
+        max-width: unset;
+      }
+
+      .gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(90deg, rgba(220,221,222,1) 0%, rgba(220,221,222,0.9) 35%, rgba(220,221,222,0.7) 50%, rgba(220,221,222,0) 100%);
+      }
+
+      .body {
+        flex: 1;
+      }
+
+      .body--frontPage {
+        padding: 4pt 57pt 0pt 65pt;
+      }
+
+      .subheading {
+        max-height: 125pt;
+        margin-bottom: 11pt;
+      }
+
+      .subheading h1 {
+        margin-bottom: 9pt;
+        font-size: 20.5pt;
+        line-height: 1.2em;
+        color: var(--light-blue);
+      }
+
+      .subheading p {
+        margin-bottom: 8pt;
+        font-size: 13.87pt;
+        font-weight: 500;
+        line-height: 1.3em;
+        font-family: 'Franklin Gothic';
+        color: var(--blue);  
+      }
+
+      .subheading h1:last-child,
+      .subheading p:last-child {
+        margin-bottom: 0pt;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table--singleCol,
+      .table--doubleCol {
+        margin-bottom: 14pt;
+      }
+
+      .table--backPage {
+        margin-bottom: 8.3pt;
+      }
+
+      .table--singleCol:last-child,
+      .table--doubleCol:last-child,
+      .table--backPage:last-child {
+        margin-bottom: 0pt;
+      }
+
+      .table--backPage:last-child {
+        margin-bottom: 10pt;
+      }
+
+      .table__row {
+        display: flex;
+        min-height: 34pt;
+        border-bottom: 1px solid var(--blue);
+      }
+
+      .table--doubleCol .table__row {
+        display: none;
+      }
+
+      .table--backPage .table__row {
+        min-height: 23pt;
+      }
+
+      .table--doubleCol .table__row--heading,
+      .table--doubleCol .table__row--arrows, 
+      .table--doubleCol .table__row--money, 
+      .table--doubleCol .table__row--hand, 
+      .table--doubleCol .table__row--computer, 
+      .table--doubleCol .table__row--face, 
+      .table--doubleCol .table__row--hands {
+        display: flex;
+      }
+
+      .table--singleCol .table__row:nth-child(odd),
+      .table--doubleCol .table__row:nth-child(odd){
+        background-color: var(--grey); 
+      }
+
+      .table--backPage .table__row:nth-child(even) {
+        background-color: var(--grey); 
+      }
+
+
+      .body .table--singleCol .table__row--heading,
+      .body .table--doubleCol .table__row--heading,
+      .body .table--backPage .table__row--heading {
+        border-bottom: none;
+        background-color: var(--blue);  
+      }
+
+
+      .table--singleCol .table__row--heading,
+      .table--doubleCol .table__row--heading {
+        min-height: 27pt; 
+      }
+
+      .table--backPage .table__row--heading {
+        min-height: 24pt; 
+      }
+
+      .table__cell {
+        display: flex;
+        align-items: center;
+        font-size: 9.32pt;
+        font-weight: 500;
+        font-family: 'Franklin Gothic Book';
+        line-height: 1.22em;
+      }
+
+      .table__cell strong {
+        font-weight: 500;
+        font-family: 'Franklin Gothic Demi';
+      }
+
+      .table--backPage .table__cell {
+        padding: 3.7pt 5pt 3.7pt 5.2pt;
+      }
+
+      .table--backPage .table__cell:first-child {
+        width: 139pt;
+        font-family: 'Franklin Gothic Demi';
+        color: var(--blue);
+      }
+
+      .table--backPage .table__cell:nth-child(2),
+      .table--backPage .table__cell:nth-child(3) {
+        border-left: 1px solid var(--blue);
+      }
+
+      .table--backPage .table__cell:nth-child(2) {
+        flex: 1;
+      }
+
+      .table--backPage .table__cell:nth-child(3) {
+        width: 179pt;
+      }
+
+      .table--singleCol .table__cell--contact {
+        padding: 6pt 8.5pt 6pt;
+      }
+
+      .table__cell--contact strong {
+        font-family: 'Franklin Gothic Demi';
+      }
+
+      .table__cell--icon {
+        padding: 5pt 8.5pt 5pt 0pt;
+      }
+
+      .table__cell--heading {
+        padding: 8pt 8.5pt 8pt;
+        font-family: 'Franklin Gothic Demi';
+        font-size: 9.7pt;
+        line-height: 1.2em;
+        color: var(--white);
+      }
+
+      .table--backPage .table__cell--heading {
+        padding: 6pt;
+        word-spacing: 1.3pt;
+      }
+
+      .table--backPage .table__cell--heading:first-child {
+        color: var(--white);
+      }
+
+      .table--backPage ul {
+        list-style-type: disc;
+        padding-left: 12pt;
+      }
+
+      .table--backPage li {
+        margin-bottom: 3.3pt;
+      }
+
+      .table--backPage li:last-child {
+        margin-bottom: 0pt;
+      }
+
+      .icon {
+        display: none;
+        width: 37pt;
+        height: 19pt;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .table__row--arrows .icon--arrows,
+      .table__row--money .icon--money,
+      .table__row--hand .icon--hand,
+      .table__row--computer .icon--computer,
+      .table__row--face .icon--face,
+      .table__row--hands .icon--hands {
+        display: block;
+      }
+
+      .icon--arrows {
+        height: 17pt;
+      }
+
+      .icon--money {
+        height: 22.4pt;
+      }
+
+      .icon--hand,
+      .icon--computer,
+      .icon--hands {
+        height: 19pt;
+      }
+
+      .icon--face {
+        height: 21pt;
+      }
+
+      .copy {
+        margin-bottom: 15.5pt;
+      }
+
+      .copy p {
+        margin-bottom: 0.75em;
+        font-size: 9.23pt;
+        font-weight: 500;
+        font-family: 'Franklin Gothic';
+        line-height: 1.3em;
+      }
+
+      .copy:last-child,
+      .copy p:last-child {
+        margin-bottom: 0pt;
+      }
+
+      .copy strong {
+        font-weight: 500;
+        font-family: 'Franklin Gothic Demi';
+      }
+
+      .footer {
+        position: relative;
+      }
+
+      .footer--frontPage {       
+        padding: 10pt 64.3pt 39.7pt;
+        font-size: 0;
+      }
+
+      .footer--backPage {
+        margin-top: 30pt;
+      }
+
+      .footer__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .info {
+        margin-bottom: 20.5pt;
+      }
+
+      .info__heading {
+        margin-bottom: 8.1pt;
+        font-size: 12pt;
+        line-height: 1.2em;
+        color: var(--blue);
+      }
+
+      .info__content {
+        display: flex;
+      }
+
+      .info__column--primary {
+        width: 218pt;
+        padding-right: 25pt;
+        flex-shrink: 0;
+      }
+
+      .contact {
+        font-size: 10pt;
+      }
+
+      .info__column--primary .contact {
+        margin-bottom: 1.7pt;
+      }
+
+      .info__column--secondary .contact {
+        margin-bottom: 7pt;
+      }
+
+      .contact:last-child {
+        margin-bottom: 0;
+      }
+
+      .contact__label {
+        font-size: 10pt;
+        line-height: 1.2em;
+      }
+
+      .contact__value {
+        font-size: 9.6pt;
+        line-height: 1.2em;
+      }
+
+      .info__column--primary .contact__label,
+      .info__column--primary .contact__value {
+        display: inline-block;
+      }
+
+      .info__column--primary .contact__label {
+        width: 47.5pt;
+      }
+
+      .logo--primary {
+        width: 172pt;
+      }
+
+      .logo--secondary {
+        flex-shrink: 0;
+        width: 192pt;
+      }
+
+      .heading {
+        margin-bottom: 7pt;
+        font-size: 17.1pt;
+        line-height: 1.2em;
+        color: var(--blue);
+      }
+
+      .bodyText {
+        font-size: 9.83pt;
+        font-weight: 500;
+        font-family: 'Franklin Gothic Book';
+        line-height: 1.3em;
+      }
+
+      .terms {
+        margin-bottom: 22pt;
+        font-size: 7.08pt;
+        font-weight: 500;
+        font-family: 'Franklin Gothic Book';
+        line-height: 1.2em;
+      }
+
+      .website {
+        margin-bottom: 5pt;
+        margin-right: 25pt;
+        font-size: 14.2pt;
+        line-height: 1.2em;
+        color: var(--blue);
+      }
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      .u-bold {
+        font-weight: 500;
+        font-family: 'Franklin Gothic Demi';
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      
+      .u-none {
+        display: none;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}">
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--frontPage">
+          <div class="header">
+            <div class="heroImage"><div class="reposition-fix">{{{AB_hero-image--a4f}}}</div></div> <!--heroImage-->
+            <div class="gradient"> </div><!--gradient-->
+            {{#AB_heading--a4f}}
+            <div class="header__heading" data-max-line="1">{{{AB_heading--a4f}}}</div> <!--header__heading-->
+            {{/AB_heading--a4f}}
+            <img class="decoration" src="https://files.outfit.io/media_library_items/149826/ABL-Outfit-Template-A4_Invite_portrait3-01.svg" /> <!--decoration-->          
+          </div> <!--header-->
+          <div class="body body--frontPage">
+            <div class="body__inner" data-max-height="dynamic">
+              {{#AB_subheading--a4f}}
+              <div class="subheading" data-max-height="css">{{{AB_subheading--a4f}}}</div> <!--subheading-->
+              {{/AB_subheading--a4f}}
+              {{#collection.AB_body-content--a4f}}
+              {{#block.single-column-table}}
+              <table class="table table--singleCol">
+                {{#heading}}
+                <tr class="table__row table__row--heading" data-max-line="3">
+                  <td class="table__cell table__cell--heading u-bold">{{{heading}}}</td> <!--table__cell--heading-->
+                </tr> <!--table__row--heading-->
+                {{/heading}}
+                {{#spreadsheet.table-content}}
+                <tr class="table__row {{^feauture-name}}u-{{/feauture-name}}{{^feature-desctription}}hide{{/feature-desctription}}">
+                  <td class="table__cell table__cell--contact"><div class="js-customRichText-src">{{{feauture-name}}} {{{feature-desctription}}}</div></td> <!--table__cell--heading-->
+                </tr> <!--table__row-->
+                {{/spreadsheet.table-content}}
+              </table> <!--table-->
+              {{/block.single-column-table}}
+              {{#block.double-column-table}}
+              <table class="table table--doubleCol">
+                {{#heading}}
+                <tr class="table__row table__row--heading" data-max-line="3">
+                  <td class="table__cell table__cell--heading u-bold">{{{heading}}}</td> <!--table__cell--heading-->
+                </tr> <!--table__row--heading-->
+                {{/heading}}
+                {{#spreadsheet.table-content}}
+                <tr class="table__row table__row--{{{feature-icon}}}">
+                  <td class="table__cell table__cell--icon">
+                    <img class="icon icon--arrows" src="https://files.outfit.io/media_library_items/149154/ABL%2520icons-arrows.svg" />
+                    <img class="icon icon--money" src="https://files.outfit.io/media_library_items/149158/ABL%2520icons-money.svg" />
+                    <img class="icon icon--hand" src="https://files.outfit.io/media_library_items/149153/ABL%2520icons-hand.svg" />
+                    <img class="icon icon--computer" src="https://files.outfit.io/media_library_items/149157/ABL%2520icons-comp.svg" />
+                    <img class="icon icon--face" src="https://files.outfit.io/media_library_items/149155/ABL%2520icons-face.svg" />
+                    <img class="icon icon--hands" src="https://files.outfit.io/media_library_items/149156/ABL%2520icons-hands.svg" />
+                    {{{feature-description}}}
+                  </td> <!--table__cell--icon-->
+                </tr> <!--table__row-->
+                {{/spreadsheet.table-content}}
+              </table> <!--table-->
+              {{/block.double-column-table}}
+              {{#block.plain-text-box}}
+              {{#copy--a4f}}
+              <div class="copy">{{{copy--a4f}}}</div> <!--copy-->
+              {{/copy--a4f}}
+              {{/block.plain-text-box}}
+              {{/collection.AB_body-content--a4f}}
+            </div> <!--body__inner-->
+          </div> <!--body-->
+          <div class="footer footer--frontPage">
+            <div class="info">
+              <div class="info__heading">For more information contact:</div> <!--info__heading-->
+              <div class="info__content">
+                <div class="info__column info__column--primary">
+                  <div class="contact">
+                    <div class="contact__value" data-max-line="1">
+                      
+                      {{#AB_first-name--bc}}<span>{{{AB_first-name--bc}}}</span>{{/AB_first-name--bc}}{{^AB_first-name--bc}}<span>{{{user.first_name}}}</span>{{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}{{/AB_first-name--bc}}   
+                {{#AB_surname--bc}}<span>{{{AB_surname--bc}}}</span>{{/AB_surname--bc}}{{^AB_surname--bc}}<span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}{{/AB_surname--bc}}
+                    
+                    </div> <!--contact__value-->
+                  
+                  
+                  </div> <!--contact-->
+                  <div class="contact">
+                    <div class="contact__value" data-max-line="1">{{{AB_title--a4f}}}{{^AB_title--a4f}}{{{user.title}}}{{/AB_title--a4f}}</div> <!--contact__value-->
+                  </div> <!--contact-->
+                  {{#AB_telephone--a4f}}
+                  <div class="contact">
+                    <div class="contact__label">Telephone:</div> <!--contact__label-->
+                    <div class="contact__value" data-max-line="1">{{{AB_telephone--a4f}}}</div> <!--contact__value-->
+                  </div> <!--contact-->
+                  {{/AB_telephone--a4f}}
+                  <div class="contact {{^AB_mobile-number--a4f}}u{{/AB_mobile-number--a4f}}-{{^user.contact_number}}none{{/user.contact_number}}" >
+                    <div class="contact__label">Mobile:</div> <!--contact__label-->
+                    <div class="contact__value" data-max-line="1">{{#AB_mobile-number--bc}}<span>{{{AB_mobile-number--bc}}}</span>{{/AB_mobile-number--bc}}{{^AB_mobile-number--bc}}<span>{{{user.contact_number}}}</span>{{^user.contact_number}}<span>&lt;Phone Number&gt;</span>{{/user.contact_number}}{{/AB_mobile-number--bc}} </div> <!--contact__value-->
+                  </div> <!--contact-->
+                  <div class="contact {{^AB_email-address--a4f}}u{{/AB_email-address--a4f}}-{{^user.email}}none{{/user.email}}">
+                    <div class="contact__label">Email:</div> <!--contact__label-->
+                    <div class="contact__value" data-max-line="1">{{#AB_email-address--bc}}<span>{{{AB_email-address--bc}}}</span>{{/AB_email-address--bc}}{{^AB_email-address--bc}}<span>{{{user.email}}}</span>{{^user.email}}<span>&lt;Email&gt;</span>{{/user.email}}{{/AB_email-address--bc}}</div> <!--contact__value-->
+                  </div> <!--contact-->
+                </div> <!--info__column-->
+                <div class="info__column info__column--secondary">
+                  {{#AB_partner-assist--a4f}}
+                  <div class="contact">
+                    <div class="contact__value">Partner Assist</div> <!--contact__value-->
+                    <div class="contact__value" data-max-line="1">{{{AB_partner-assist--a4f}}}</div> <!--contact__value-->
+                  </div> <!--contact-->
+                  {{/AB_partner-assist--a4f}}
+                  {{#AB_broker-website--a4f}}
+                  <div class="contact">
+                    <div class="contact__value" data-max-line="1">{{{AB_broker-website--a4f}}}</div> <!--contact__value-->
+                  </div> <!--contact-->
+                  {{/AB_broker-website--a4f}}
+                </div> <!--info__column-->
+              </div> <!--info__contact-->
+            </div> <!--info-->
+            <img class="logo logo--primary" src="{{{account.logos.logo-primary}}}"/> <!--logo--primary-->
+          </div> <!--footer-->
+        </div><!--container fit--frontPage-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--backPage">
+          <div class="body body--backPage">
+            <div class="body__inner" data-max-height="dynamic">
+              {{#AB_heading-side-back--a4f}}
+              <div class="heading" data-max-line="1">{{{AB_heading-side-back--a4f}}}</div> <!--heading-->
+              {{/AB_heading-side-back--a4f}}
+              <table class="table table--backPage">
+                {{#collection.AB_body-content-side-back--a4f}}
+                {{#block.table-heading}}
+                <tr class="table__row table__row--heading">
+                  <td class="table__cell table__cell--heading" data-max-line="3">{{{table-heading-left}}}</td> <!--table__cell--heading-->
+                  <td class="table__cell table__cell--heading" data-max-line="3">{{{table-heading-center}}}</td> <!--table__cell--heading-->
+                  <td class="table__cell table__cell--heading" data-max-line="3">{{{table-heading-right}}}</td> <!--table__cell--heading-->
+                </tr> <!--table__row--heading-->
+                {{/block.table-heading}}
+                {{#block.double-table-table}}
+                {{#spreadsheet.table-content}}
+                <tr class="table__row">
+                  <td class="table__cell table__cell--contact"><div class="js-customRichText-src-2">{{{column-1}}}</div></td> <!--table__cell--heading-->
+                  <td class="table__cell table__cell--contact"><div class="js-customRichText-src-2">{{{column-2}}}</div></td> <!--table__cell--heading-->
+                </tr> <!--table__row-->
+                {{/spreadsheet.table-content}}
+                {{/block.double-table-table}}
+                {{#block.triple-table-table}}
+                {{#spreadsheet.table-content-2}}
+                <tr class="table__row">
+                  <td class="table__cell table__cell--contact"><div class="js-customRichText-src-2">{{{column-1}}}</div></td> <!--table__cell--heading-->
+                  <td class="table__cell table__cell--contact"><div class="js-customRichText-src-2">{{{column-2}}}</div></td> <!--table__cell--heading-->
+                  <td class="table__cell table__cell--contact"><div class="js-customRichText-src-2">{{{column-3}}}</div></td> <!--table__cell--heading-->
+                </tr> <!--table__row-->
+                {{/spreadsheet.table-content-2}}
+                {{/block.triple-table-table}}  
+                {{/collection.AB_body-content-side-back--a4f}}
+              </table> <!--table-->
+              {{#collection.AB_body-content-side-back--a4f}}
+              {{#block.body-text}}
+              <div class="bodyText" data-max-line="5">{{{text}}}</div> <!--bodyText-->
+              {{/block.body-text}}
+              {{/collection.AB_body-content-side-back--a4f}}
+            </div> <!--body__inner-->
+          </div> <!--body--backPage-->
+          <div class="footer footer--backPage">
+
+            
+            <div class="terms">
+            {{#AB_terms-and-conditions--a4f}}
+              <span>{{{account.snippets.adelaide-abn}}},</span>
+              <span>{{{AB_terms-and-conditions--a4f}}}</span>
+              <span>1393425, </span>
+              <span>{{#metadata}}OUT_{{export_id}}{{/metadata}}{{^metadata}}EXPORT ID WILL GO HERE{{/metadata}}, </span>
+              <span class="js-date"> </span>
+            {{/AB_terms-and-conditions--a4f}}
+            </div> <!--terms-->
+            
+            <div class="footer__row">
+              {{#AB_broker-website--a4f}}
+              <div class="website" data-max-line="1">{{{AB_broker-website--a4f}}}</div> <!--website-->
+              {{/AB_broker-website--a4f}}
+              <img class="logo logo--secondary" src="https://files.outfit.io/media_library_items/148219/ADB-logo-invitition.png" /> <!--logo--secondary-->
+            </div> <!--footer__row-->
+          </div> <!--footer-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          detectProjectKit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+      
+      function injectDate() {
+        const container = document.querySelector('.fit');
+        const date = container.querySelector('.js-date');
+
+        date.textContent = new Date().toLocaleDateString('en-AU');
+      }
+
+      injectDate();
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        detectProjectKit();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      //placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+      customRichText();
+      customRichText2();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function tableRowClassLowerCase() {
+        if (document.querySelector('.table--doubleCol')) {
+          const table = document.querySelector('.table--doubleCol');
+          const rows = table.querySelectorAll('.table__row');
+
+          rows.forEach((row) => {
+            let classNameLower = row.className.toLowerCase();
+            row.className = classNameLower;
+
+          });
+        }
+        return
+      };
+
+      tableRowClassLowerCase();
+      
+                    function detectProjectKit() {
+        const isProjectKit = window.parent.document.querySelector(".preview-frame")
+        const overflowFinder = document.querySelectorAll(".overflow");
+        if ( isProjectKit ) {
+          console.log("I'm in preview mode.");
+          for (i = 0; i < overflowFinder.length; ++i) {
+            overflowFinder[i].classList.remove("overflow");
+            console.log("Got " + i);
+          }
+
+        }
+
+      }
+
+      detectProjectKit();
+      
+    </script>
+
+
+  </body>
+</html>
