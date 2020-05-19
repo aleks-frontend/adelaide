@@ -236,10 +236,6 @@
         text-align: center;
       }
 
-      .imageSize--mini .interest--primary {
-        margin-bottom: 7pt;
-      }
-
       .imageSize--regular .interest--primary {
         margin-bottom: 8pt;
       }
@@ -370,14 +366,14 @@
             <img class="image image--regular image--oneColumn" src="https://files.outfit.io/media_library_items/186838/Adelaided%2520Bank-Rates%2520Splash-Regular%2520-%2520One%2520Column-background.svg" /><!--image--regular-->
             <img class="image image--regular image--twoColumns" src="https://files.outfit.io/media_library_items/186839/Adelaided%2520Bank-Rates%2520Splash-Regular%2520-%2520Two%2520Column-background.svg" /><!--image--regular-->         
             <div class="backgroundImage"><div class="reposition-fix">{{{AB_background-image--rsd}}}</div></div> <!--backgroundImage-->
-            <div class="content content--primary">
+            <div class="content content--primary" data-max-height="dynamic">
               <div class="heading__container {{^AB_heading--rsd}}u-{{/AB_heading--rsd}}{{^AB_subheading--rsd}}hide{{/AB_subheading--rsd}}">
                 {{#AB_heading--rsd}}
-                <div class="heading heading--mini" data-max-line="1">{{{AB_heading--rsd}}}</div> <!--heading-->
+                <div class="heading heading--mini" data-max-line="2">{{{AB_heading--rsd}}}</div> <!--heading-->
                 <div class="heading heading--regular" data-max-line="2">{{{AB_heading--rsd}}}</div> <!--heading-->
                 {{/AB_heading--rsd}}
                 {{#AB_subheading--rsd}}
-                <div class="subheading" data-max-line="1">{{{AB_subheading--rsd}}}</div> <!--subheading-->
+                <div class="subheading">{{{AB_subheading--rsd}}}</div> <!--subheading-->
                 {{/AB_subheading--rsd}}
               </div> <!--heading__container-->
               <div class="interest__container">
