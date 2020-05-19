@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html data-sign="OSZ">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+
+      :root {
+        --blue: {{{account.colors.pms-540}}};
+        --light-blue: {{{account.colors.pms-2985}}};
+        --white: #fff;
+        --black: {{{account.colors.pms-pantone-black}}};
+        --grey: {{{account.colors.15--black-tint}}};
+      }
+
+      .textColour--blue {
+        --dynamic-text-colour: var(--blue);
+      }
+
+      .textColour--light-blue {
+        --dynamic-text-colour: var(--light-blue);
+      }
+
+      .textColour--white {
+        --dynamic-text-colour: var(--white);
+      }
+
+      .textColour--black {
+        --dynamic-text-colour: var(--black);
+      }
+
+      .textColour--grey {
+        --dynamic-text-colour: var(--grey);
+      }
+
+      /* order inputs */
+
+      /*
+      {{show-crop}}
+      {{placeholder-validation-2}}
+      {{ placeholder-opacity-2 }}
+      {{ placeholder-toggle-new-2 }}
+      {{ placeholder-image-2 }}      
+      {{{AB_image-size--rsd}}}
+      {{{AB_columns--rsd}}}
+      {{{AB_background-image--rsd}}}
+      {{{AB_text-colour--rsd}}}
+      {{{AB_heading--rsd}}}
+      {{{AB_subheading--rsd}}}
+      {{{AB_interest-rate--rsd}}}
+      {{{AB_interest-rate-details--rsd}}}
+      {{{AB_comparison-rate--rsd}}}
+      {{{AB_comparison-rate-details--rsd}}}
+      {{{AB_column-2-heading--rsd}}}
+      {{{AB_column-2-subheading--rsd}}}
+      {{{AB_column-2-interest-rate--rsd}}}
+      {{{AB_column-2-interest-rate-details--rsd}}}
+      {{{AB_column-2-comparison-rate--rsd}}}
+      {{{AB_column-2-comparison-rate-details--rsd}}}
+      */
+
+
+      html {
+        font-family: 'Franklin Gothic Demi';
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        top: 3mm;
+        bottom: 3mm;
+        left: 3mm;
+        right: 3mm;
+      }
+
+      .imageSize--mini .fit {
+        padding: 13.4pt 40pt;
+      }
+
+      .columns--2.imageSize--mini .fit {
+        padding: 13.4pt 40pt 13.4pt 40pt;
+      }
+
+      .imageSize--regular .fit {
+        padding: 7.4pt 45pt;
+      }
+
+      .body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+      }
+
+      .image {
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .imageSize--mini .image--mini,
+      .columns--1.imageSize--regular .image--oneColumn,
+      .columns--2.imageSize--regular .image--twoColumns {
+        display: block;
+      }
+
+      .withBackgroundImage .image,
+      .imageSize--regular .withBackgroundImage .image {
+        display: none;
+      }
+
+      .image--mini {
+        top: 3.6%;
+        left: 4%;
+      }
+
+      .image--oneColumn {
+        top: 2%;
+        left: 8.4%;
+      }
+
+      .image--twoColumns {
+        top: 2%;
+        left: 4%;
+      }
+
+      .content {
+        display: none;
+        flex-direction: column;
+        position: relative;
+        text-align: center;
+        color: var(--dynamic-text-colour);
+      }      
+
+      .imageSize--mini .content--primary,
+      .columns--1 .content--primary,
+      .imageSize--regular.columns--2 .content--secondary{
+        display: flex;
+        align-items: center;
+      }
+
+      .content--secondary:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 95.5%;
+        width: 1pt;
+        background-color: var(--dynamic-text-colour);        
+      }
+
+      .heading__container {
+        width: 162pt;
+      }
+
+      .imageSize--mini .heading__container {
+        margin-bottom: 7pt;
+      }
+
+      .imageSize--regular .heading__container {
+        margin-bottom: 9pt;
+      }
+
+      .heading {
+        display: none;   
+        position: relative;
+      }
+
+      .heading--mini {
+        font-size: 24.3pt;
+        line-height: 1.1em;
+      }
+
+      .heading--regular {
+        margin-bottom: 2pt;
+        font-size: 23pt;
+        line-height: 1.05em;
+      }
+
+      .imageSize--mini .heading--mini,
+      .imageSize--regular .heading--regular {
+        display: block;        
+      }
+
+      .subheading {
+        position: relative;
+        font-size: 13.8pt;
+        line-height: 1.1em;
+      }
+
+      .interest__container {
+        display: flex;
+      }
+
+      .imageSize--mini .interest__container {
+        justify-content: center;
+      }
+
+      .imageSize--regular .interest__container {
+        flex-direction: column;
+        align-content: center;
+      }
+
+      .interest {
+        width: 162pt;
+        text-align: center;
+      }
+
+      .imageSize--mini .interest--primary {
+        margin-bottom: 7pt;
+      }
+
+      .imageSize--regular .interest--primary {
+        margin-bottom: 8pt;
+      }
+
+      .imageSize--mini .interest + .interest {
+        margin-left: 16pt;
+      }
+
+      .imageSize--mini.columns--1 .interest--secondary {
+        display: none;
+      }
+
+      .interest__rate {
+        position: relative;
+        font-size: 40pt;
+      }
+
+      .imageSize--mini .interest__rate {
+        line-height: 0.9em;
+      }
+
+      .imageSize--regular .interest__rate {
+        line-height: 0.85em;
+      }
+
+      .interest__rate sub{
+        font-size: 0.35em;
+        top: 0em;
+      }
+
+      .interest__details {
+        position: relative;
+        font-size: 13.8pt;
+        line-height: 1.1em;
+      }
+
+      .content__row {
+        display: flex;
+        margin-bottom: 8.5pt;
+      }
+
+      .content__row:last-child {
+        margin-bottom: 0pt;
+      }
+
+      .content__item {
+        width: 162pt;
+      }
+
+      .content__item + .content__item {
+        margin-left: 25pt;
+      }
+
+      .content__rate {
+        position: relative;
+        font-size: 40pt;
+        line-height: 0.85em;
+      }
+
+      .content__rate sub{
+        font-size: 0.35em;
+        top: 0em;
+      }
+
+      .content__details {
+        position: relative;
+        font-size: 13.8pt;
+        line-height: 1.1em;
+      }
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .overflow:before,
+      .overflow:hover:after {
+        font-size: 0.5em;
+      }
+
+      .js-rate-validation.overflow:before {
+        font-size: 0.3em;
+      }
+
+      .js-rate-validation.overflow:hover:after {
+        content: 'Incorrect rate format!';
+        font-size: 0.3em;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" 
+        data-crop="{{show-crop}}" 
+        data-reduce-export-font-size-by-percent="0" 
+        data-reduce-firefox-font-size-by-percent="0" 
+        data-prevent-export-overflow="false"
+        class="imageSize--{{{AB_image-size--rsd}}}{{^AB_image-size--rsd}}mini{{/AB_image-size--rsd}}
+               columns--{{{AB_columns--rsd}}}{{^AB_columns--rsd}}1{{/AB_columns--rsd}}
+               textColour--{{{AB_text-colour--rsd}}}{{^AB_text-colour--rsd}}blue{{/AB_text-colour--rsd}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity-2 }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-2 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="body {{#AB_background-image--rsd}}withBackgroundImage{{/AB_background-image--rsd}}">
+            <img class="image image--mini" src="https://files.outfit.io/media_library_items/186836/Adelaided%2520Bank-Rates%2520Splash-Mini%2520-%2520No%2520Comparison%2520Rate-background.svg" /><!--image--mini-->
+            <img class="image image--regular image--oneColumn" src="https://files.outfit.io/media_library_items/186838/Adelaided%2520Bank-Rates%2520Splash-Regular%2520-%2520One%2520Column-background.svg" /><!--image--regular-->
+            <img class="image image--regular image--twoColumns" src="https://files.outfit.io/media_library_items/186839/Adelaided%2520Bank-Rates%2520Splash-Regular%2520-%2520Two%2520Column-background.svg" /><!--image--regular-->         
+            <div class="backgroundImage"><div class="reposition-fix">{{{AB_background-image--rsd}}}</div></div> <!--backgroundImage-->
+            <div class="content content--primary">
+              <div class="heading__container {{^AB_heading--rsd}}u-{{/AB_heading--rsd}}{{^AB_subheading--rsd}}hide{{/AB_subheading--rsd}}">
+                {{#AB_heading--rsd}}
+                <div class="heading heading--mini" data-max-line="1">{{{AB_heading--rsd}}}</div> <!--heading-->
+                <div class="heading heading--regular" data-max-line="2">{{{AB_heading--rsd}}}</div> <!--heading-->
+                {{/AB_heading--rsd}}
+                {{#AB_subheading--rsd}}
+                <div class="subheading" data-max-line="1">{{{AB_subheading--rsd}}}</div> <!--subheading-->
+                {{/AB_subheading--rsd}}
+              </div> <!--heading__container-->
+              <div class="interest__container">
+                <div class="interest interest--primary">
+                  {{#AB_interest-rate--rsd}}
+                  <div class="interest__rate" data-max-line="1"><span class="js-rate-validation">{{{AB_interest-rate--rsd}}}</span>%<sub> p.a.</sub></div> <!--interest__rate-->
+                  {{/AB_interest-rate--rsd}}
+                  {{#AB_interest-rate-details--rsd}}
+                  <div class="interest__details" data-max-line="2">{{{AB_interest-rate-details--rsd}}}</div> <!--interest__detail-->
+                  {{/AB_interest-rate-details--rsd}}
+                </div> <!--interest-->
+                <div class="interest interest--secondary">
+                  {{#AB_comparison-rate--rsd}}
+                  <div class="interest__rate" data-max-line="1"><span class="js-rate-validation">{{{AB_comparison-rate--rsd}}}</span>%<sub> p.a.</sub></div> <!--interest__rate-->
+                  {{/AB_comparison-rate--rsd}}
+                  {{#AB_comparison-rate-details--rsd}}
+                  <div class="interest__details" data-max-line="2">{{{AB_comparison-rate-details--rsd}}}</div> <!--interest__detail-->
+                  {{/AB_comparison-rate-details--rsd}}
+                </div> <!--interest-->
+              </div> <!--interest__container-->
+            </div> <!--content content--primary-->
+
+            <div class="content content--secondary">
+              <div class="content__row content__row--primary">
+                <div class="content__item">
+                  {{#AB_heading--rsd}}
+                  <div class="heading heading--regular" data-max-line="2">{{{AB_heading--rsd}}}</div> <!--heading-->
+                  {{/AB_heading--rsd}}
+                  {{#AB_subheading--rsd}}
+                  <div class="subheading" data-max-line="1">{{{AB_subheading--rsd}}}</div> <!--subheading-->
+                  {{/AB_subheading--rsd}}
+                </div> <!--content__item-->
+                <div class="content__item">
+                  {{#AB_column-2-heading--rsd}}
+                  <div class="heading heading--regular" data-max-line="2">{{{AB_column-2-heading--rsd}}}</div> <!--heading-->
+                  {{/AB_column-2-heading--rsd}}
+                  {{#AB_column-2-subheading--rsd}}
+                  <div class="subheading" data-max-line="1">{{{AB_column-2-subheading--rsd}}}</div> <!--subheading-->
+                  {{/AB_column-2-subheading--rsd}}
+                </div> <!--content__item-->
+              </div> <!--content__row-->
+              <div class="content__row content__row--secondary">
+                <div class="content__item">
+                  {{#AB_interest-rate--rsd}}
+                  <div class="content__rate"><span class="js-rate-validation">{{{AB_interest-rate--rsd}}}</span>%<sub> p.a.</sub></div> <!--content__rate-->
+                  {{/AB_interest-rate--rsd}}
+                  {{#AB_interest-rate-details--rsd}}
+                  <div class="content__details" data-max-line="2">{{{AB_interest-rate-details--rsd}}}</div> <!--content__details-->
+                  {{/AB_interest-rate-details--rsd}}
+                </div> <!--content__item-->
+                <div class="content__item">
+                  {{#AB_column-2-interest-rate--rsd}}
+                  <div class="content__rate" data-max-line="1"><span class="js-rate-validation">{{{AB_column-2-interest-rate--rsd}}}</span>%<sub> p.a.</sub></div> <!--content__rate-->
+                  {{/AB_column-2-interest-rate--rsd}}
+                  {{#AB_column-2-interest-rate-details--rsd}}
+                  <div class="content__details" data-max-line="2">{{{AB_column-2-interest-rate-details--rsd}}}</div> <!--content__details-->
+                  {{/AB_column-2-interest-rate-details--rsd}}
+                </div> <!--content__item-->
+              </div> <!--content__row-->
+              <div class="content__row">
+                <div class="content__item">
+                  {{#AB_comparison-rate--rsd}}
+                  <div class="content__rate" data-max-line="1"><span class="js-rate-validation">{{{AB_comparison-rate--rsd}}}</span>%<sub> p.a.</sub></div> <!--content__rate-->
+                  {{/AB_comparison-rate--rsd}}
+                  {{#AB_comparison-rate-details--rsd}}
+                  <div class="content__details" data-max-line="2">{{{AB_comparison-rate-details--rsd}}}</div> <!--content__details-->
+                  {{/AB_comparison-rate-details--rsd}}
+                </div> <!--content__item-->
+                <div class="content__item">
+                  {{#AB_column-2-comparison-rate--rsd}}
+                  <div class="content__rate" data-max-line="1"><span class="js-rate-validation">{{{AB_column-2-comparison-rate--rsd}}}</span>%<sub> p.a.</sub></div> <!--content__rate-->
+                  {{/AB_column-2-comparison-rate--rsd}}
+                  {{#AB_column-2-comparison-rate-details--rsd}}
+                  <div class="content__details" data-max-line="2">{{{AB_column-2-comparison-rate-details--rsd}}}</div> <!--content__details-->
+                  {{/AB_column-2-comparison-rate-details--rsd}}
+                </div> <!--content__item-->
+              </div> <!--content__row-->
+            </div> <!--content content--secondary-->
+          </div> <!--body-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="js/fontfaceobserver.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new-2 }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new-2 }}{{^placeholder-toggle-new-2}}hide{{/placeholder-toggle-new-2}}"); {{ /placeholder-toggle-new-2 }}
+      {{ #placeholder-validation-2 }}document.body.classList.add("placeholder__validation--{{placeholder-validation-2}}"){{ /placeholder-validation-2 }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+          validateRateInput();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      // All external font-families need to be added to 'fonts' array
+      document.addEventListener('DOMContentLoaded', function(event) {
+        const fonts = ['Franklin Gothic Demi'];
+        const fontObservers = [];
+
+        fonts.forEach(font => {
+          const obs = new FontFaceObserver(font);
+          fontObservers.push(obs.load())
+        });
+
+        Promise.all(fontObservers).then(() => {
+          maxLineCheck();
+          maxHeightCheck();
+          injectDynamicContent();
+          hideEmptyTitles();
+
+          document.dispatchEvent(new Event('printready'));
+        });
+      });    
+
+      function validateRateInput() {
+        const rates = document.querySelectorAll('.js-rate-validation');
+        
+        if(!rates) return;
+        
+        for ( const rate of rates ) {
+          const regex = /^[0-9]{1,2}\.\d{2}$/gm;
+          
+          if( !regex.test( rate.innerText ) ) {
+            rate.classList.add('overflow');
+          } else {
+            rate.classList.remove('overflow');
+          }
+        }
+      }
+
+      validateRateInput();
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+
+
+  </body>
+</html>
