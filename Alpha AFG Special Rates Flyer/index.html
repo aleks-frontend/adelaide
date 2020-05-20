@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      /* order inputs */
+
+      /*
+      {{show-crop}}
+      {{placeholder-validation-2}}
+      {{ placeholder-opacity-2 }}
+      {{ placeholder-toggle-new-2 }}
+      {{ placeholder-image-2 }}
+
+      {{{AB_home-loan-type--asrf}}}
+      {{{AB_special-type--asrf}}}
+      {{{AB_special-details--asrf}}}
+      {{{AB_benefits-list--asrf}}}
+      {{{AB_number-of-products--asrf}}}
+      {{{AB_product-1-name--asrf}}}
+      {{{AB_product-1-column-1-name--asrf}}}
+      {{{AB_product-1-column-2-name--asrf}}} 
+      {{#spreadsheet.AB_product-1-table--asrf}}{{/spreadsheet.AB_product-1-table--asrf}}
+      {{{AB_product-2-name--asrf}}}
+      {{{AB_product-2-column-1-name--asrf}}}
+      {{{AB_product-2-column-2-name--asrf}}}
+      {{#spreadsheet.AB_product-2-table--asrf}}{{/spreadsheet.AB_product-2-table--asrf}}
+      {{{AB_eligibility-criteria--asrf}}}
+      {{{AB_call-to-action--asrf}}}
+      {{{AB_url--asrf}}}
+      {{{AB_comparison-rate-disclaimer--asrf}}}
+      {{{AB_afg-home-loans-disclaimer--asrf}}}
+      {{{AB_disclaimer-date--asrf}}}
+      {{{AB_disclaimer--asrf}}}
+      */
+
+
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin%20Gothic%20Book%20Regular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Franklin-gothic-stack-2/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Gotham/stylesheet.css');
+
+      :root {
+        --black: {{{account.colors.pms-pantone-black}}};
+        --white: {{{account.colors.white}}};
+        --black-tint: {{{account.colors.15--black-tint}}};
+        --yellow: #F1CB00;
+        --light-yellow: #FCF3D9;
+      }
+
+
+      html {
+        font-family: 'Franklin Gothic Demi';
+        color: #000;
+        word-break: break-word;
+      }
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 0pt 44pt 25.9pt;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: -9.3%;
+        left: -11%;
+        width: 135%;
+        max-width: unset;
+        z-index: -1;
+      }
+
+      .header { margin-bottom: 34pt; }
+
+      .logo__container { 
+        font-size: 0;
+        width: 107pt;
+        height: 104pt;
+        background: var(--yellow); 
+      }
+
+      .logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: bottom;
+      }
+
+      .body {
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 20pt;
+      }
+
+      .body__top {
+        flex: 1;
+        padding-bottom: 20pt;
+      }
+
+      .heading {
+        margin-bottom: 29.8pt;
+        font-family: "Gotham";
+        font-size: 30.1pt;
+        line-height: 1.1em;
+        font-weight: 600;
+      }
+
+      .info {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 29pt;
+        font-family: "Gotham";
+        font-size: 15pt;
+      }
+
+      .details {
+        position: relative;
+        flex: 1;
+        margin-right: 28.1pt;
+      }
+      
+      .details__inner {
+        font-weight: 600;
+        font-size: 12.2pt;
+        line-height: 1.45em;
+        color: var(--yellow);        
+      }
+      
+      /* Using inner absolutely positioned div because of an export bug with colors */
+      .details__inner--invisible { opacity: 0; }
+      .details__inner--absolute {       	
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .info__benefits {
+        flex: 1;
+        font-family: 'Franklin Gothic Demi';
+        font-size: 12.5pt;
+        line-height: 1.2em;
+      }
+
+      .info__benefits strong { 
+       font-family: 'Franklin Gothic SSi';
+        font-weight: 600;
+      }
+
+      .info__benefits ul { margin-top: 3pt; }
+      .info__benefits ul:first-child { margin-top: 0; }
+
+      .info__benefits li {
+        position: relative;
+        margin-bottom: 3.6pt;
+        padding-left: 15pt;
+        font-size: 12.4pt;
+        line-height: 1.2em;
+      }
+
+      .info__benefits li:last-child { margin-bottom: 0; }
+
+      .info__benefits li:before {
+        content: '\2022';
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 0.7em;
+      }
+
+      .product__container {
+        display: flex;
+        margin-left: -23pt;
+      }
+
+      .product {
+        width: 242pt;
+        margin-left: 23pt;
+      }
+
+      .numberOfProducts--one-product .product:nth-child(2) { display: none; }
+
+      .product__name {
+        font-size: 14.3pt;
+        line-height: 1.2em;
+        color: var(--yellow);
+      }
+
+      .table {
+        width: 100%;
+        font-size: 0;
+      }
+
+      .table__row--heading { background-color: var(--yellow); }
+
+      .table__row--body:nth-child(even) { background-color: var(--black-tint); }
+
+      .table__cell {
+        width: 50%;
+        padding: 5pt 8pt;
+        font-family: 'Franklin Gothic Book';
+        font-size: 12pt;
+        text-align: center;
+        text-align: center;
+      }
+
+      .table__cell--heading {
+        padding: 8pt;
+        font-family: 'Franklin Gothic Demi';
+        font-size: 13pt;
+        line-height: 1.2em;
+        text-align: center;
+        color: var(--white);
+      }
+
+      .criteria {
+        padding-left: 14pt;
+        font-size: 12.4pt;
+        line-height: 1.2em;
+        color: var(--yellow);
+      }
+
+      .cta__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 65pt;
+        margin-top: 21pt;
+        padding-left: 14pt;
+        border-radius: 10pt;
+        background-color: var(--light-yellow);
+      }
+
+      .cta {
+        font-size: 14.8pt;
+        line-height: 1.1em;
+        color: var(--yellow);
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .url {
+        font-family: "Gotham";
+        font-size: 14pt;
+        line-height: 1.2em;
+        font-weight: 600;
+        color: var(--yellow);
+      }
+
+      .disclaimer__container {
+        margin-top: 9pt;
+        font-family: 'Franklin Gothic Book';
+        font-size: 7.3pt;
+        line-height: 1.2em;
+      }
+
+      .disclaimer { margin-bottom: 2pt; }
+
+      .disclaimer:last-child { margin-bottom: 0; }
+
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" 
+        data-crop="{{show-crop}}" 
+        data-reduce-export-font-size-by-percent="0" 
+        data-reduce-firefox-font-size-by-percent="0" 
+        data-prevent-export-overflow="false"
+        class="numberOfProducts--{{{AB_number-of-products--asrf}}}{{^AB_number-of-products--asrf}}2{{/AB_number-of-products--asrf}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity-2 }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-2 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <img class="backgroundImage" src="https://files.outfit.io/media_library_items/186833/Adelaided%2520Bank-Alpha%2520AFG%2520Special%2520rates%2520flyer-decoration.svg">
+          <div class="header">
+            <div class="logo__container">
+              <img class="logo" src="https://files.outfit.io/media_library_items/186832/Adelaided%2520Bank-Alpha%2520AFG%2520Special%2520rates%2520flyer-logo.svg">
+            </div><!--logo__container-->
+          </div><!--header-->
+          <div class="body">
+            <div class="body__top">
+              <div class="body__topInner" data-max-height="dynamic">
+                <div class="heading" data-max-line="2">{{{AB_home-loan-type--asrf}}} {{{AB_special-type--asrf}}}</div><!--heading-->
+                <div class="info">
+                  <div class="details">
+                    <!-- Using inner absolutely positioned div because of an export bug with colors -->
+                    <div class="details__inner details__inner--invisible">{{{AB_special-details--asrf}}}</div>
+                    <div class="details__inner details__inner--absolute" data-max-line="8">{{{AB_special-details--asrf}}}</div>
+                  </div><!-- end details -->
+                  <div class="info__benefits" data-max-line="8">{{{AB_benefits-list--asrf}}}</div><!--info__benefits-->
+                </div><!--info-->
+                <div class="product__container">
+                  <div class="product">
+                    <div class="product__name" data-max-line="1">{{{AB_product-1-name--asrf}}}</div><!--product__name-->
+                    <table class="table">
+                      <tr class="table__row table__row--heading">
+                        <td class="table__cell table__cell--heading" data-max-height="63">{{{AB_product-1-column-1-name--asrf}}}</td><!--table__cell--heading-->
+                        <td class="table__cell table__cell--heading" data-max-height="63">{{{AB_product-1-column-2-name--asrf}}}</td><!--table__cell--heading-->
+                      </tr><!--table__row--heading-->
+                      {{#spreadsheet.AB_product-1-table--asrf}}
+                      <tr class="table__row table__row--body">
+                        <td class="table__cell" data-max-height="31">{{column-1}}</td><!--table__cell-->
+                        <td class="table__cell" data-max-height="31">{{column-2}}</td><!--table__cell-->
+                      </tr><!--table__row--body-->
+                      {{/spreadsheet.AB_product-1-table--asrf}}
+                    </table><!--table-->
+                  </div><!--product-->
+                  <div class="product">
+                    <div class="product__name" data-max-line="1">{{{AB_product-2-name--asrf}}}</div><!--product__name-->
+                    <table class="table">
+                      <tr class="table__row table__row--heading">
+                        <td class="table__cell table__cell--heading" data-max-height="63">{{{AB_product-2-column-1-name--asrf}}}</td><!--table__cell--heading-->
+                        <td class="table__cell table__cell--heading" data-max-height="63">{{{AB_product-2-column-2-name--asrf}}}</td><!--table__cell--heading-->
+                      </tr><!--table__row--heading-->
+                      {{#spreadsheet.AB_product-2-table--asrf}}
+                      <tr class="table__row table__row--body">
+                        <td class="table__cell" data-max-height="31">{{column-1}}</td><!--table__cell-->
+                        <td class="table__cell" data-max-height="31">{{column-2}}</td><!--table__cell-->
+                      </tr><!--table__row--body-->
+                      {{/spreadsheet.AB_product-2-table--asrf}}
+                    </table><!--table-->
+                  </div><!--product-->
+                </div><!--product__container-->
+              </div><!--body__topInner-->
+            </div><!--body__top-->
+            <div class="body__bottom">
+              {{#AB_eligibility-criteria--asrf}}
+              <div class="criteria" data-max-line="2">{{{AB_eligibility-criteria--asrf}}}</div><!--criteria-->
+              {{/AB_eligibility-criteria--asrf}}
+              {{#AB_call-to-action--asrf}}
+              <div class="cta__container">
+                <div class="cta" data-max-line="3">{{{AB_call-to-action--asrf}}}</div><!--cta-->
+              </div><!--cta__container-->
+              {{/AB_call-to-action--asrf}}
+            </div><!--body__bottom-->
+          </div><!--body-->
+          <div class="footer">
+            {{#AB_url--asrf}}
+            <div class="url" data-max-line="1">{{{AB_url--asrf}}}</div><!--url-->
+            {{/AB_url--asrf}}
+            <div class="disclaimer__container">
+              <div class="disclaimer" data-max-line="4">{{{AB_comparison-rate-disclaimer--asrf}}}</div><!--disclaimer-->
+              <div class="disclaimer" data-max-line="4">{{{AB_afg-home-loans-disclaimer--asrf}}} Information is correct as at {{{AB_disclaimer-date--asrf}}} and is subject to change. <br><span>{{#metadata}}OUT_{{export_id}}{{/metadata}}{{^metadata}} EXPORT ID WILL GO HERE{{/metadata}}&thinsp;</span>{{{AB_disclaimer--asrf}}} {{{AB_job-name--asrf}}} (<span class="js-date"></span>)</div><!--disclaimer-->
+            </div><!--disclaimer__container-->
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="js/fontfaceobserver.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new-2 }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new-2 }}{{^placeholder-toggle-new-2}}hide{{/placeholder-toggle-new-2}}"); {{ /placeholder-toggle-new-2 }}
+      {{ #placeholder-validation-2 }}document.body.classList.add("placeholder__validation--{{placeholder-validation-2}}"){{ /placeholder-validation-2 }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+      
+      function injectDate() {
+        const containers = document.querySelectorAll('.fit');
+
+        containers.forEach(container => {
+          const dateContainer = container.querySelector('.js-date');
+          const date = new Date();
+          const month = date.getMonth();
+          const year = date.getFullYear().toString().substr(-2);          
+          
+          dateContainer.innerText = `${month}/${year}`;
+        });
+      }
+
+      injectDate();
+
+      // Calling text size restriction functions once the fonts are loaded
+      // All external font-families need to be added to 'fonts' array
+      document.addEventListener('DOMContentLoaded', function(event) {
+        const fonts = ['Franklin Gothic Demi', 'Gotham', 'Franklin Gothic Book'];
+        const fontObservers = [];
+
+        fonts.forEach(font => {
+          const obs = new FontFaceObserver(font);
+          fontObservers.push(obs.load())
+        });
+
+        Promise.all(fontObservers).then(() => {
+          maxLineCheck();
+          maxHeightCheck();
+          injectDynamicContent();
+          hideEmptyTitles();
+
+          document.dispatchEvent(new Event('printready'));
+        });
+      });      
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+
+
+  </body>
+</html>
