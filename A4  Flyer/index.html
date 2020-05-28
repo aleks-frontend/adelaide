@@ -185,7 +185,8 @@
       .table--doubleCol .table__row--hand, 
       .table--doubleCol .table__row--computer, 
       .table--doubleCol .table__row--face, 
-      .table--doubleCol .table__row--hands {
+      .table--doubleCol .table__row--hands,
+      .table--doubleCol .table__row--tick {
         display: flex;
       }
 
@@ -308,7 +309,8 @@
       .table__row--hand .icon--hand,
       .table__row--computer .icon--computer,
       .table__row--face .icon--face,
-      .table__row--hands .icon--hands {
+      .table__row--hands .icon--hands,
+      .table__row--tick .icon--tick {
         display: block;
       }
 
@@ -322,9 +324,11 @@
 
       .icon--hand,
       .icon--computer,
-      .icon--hands {
+      .icon--hands,
+      .icon--tick {
         height: 19pt;
       }
+
 
       .icon--face {
         height: 21pt;
@@ -492,7 +496,7 @@
         width: 100% !important;
         height: 100% !important;
       }
-      
+
       .u-none {
         display: none;
       }
@@ -550,6 +554,7 @@
                     <img class="icon icon--computer" src="https://files.outfit.io/media_library_items/149157/ABL%2520icons-comp.svg" />
                     <img class="icon icon--face" src="https://files.outfit.io/media_library_items/149155/ABL%2520icons-face.svg" />
                     <img class="icon icon--hands" src="https://files.outfit.io/media_library_items/149156/ABL%2520icons-hands.svg" />
+                    <img class="icon icon--tick" src="https://files.outfit.io/media_library_items/190821/tick-icon-adelaide.svg" />
                     {{{feature-description}}}
                   </td> <!--table__cell--icon-->
                 </tr> <!--table__row-->
@@ -571,13 +576,16 @@
                 <div class="info__column info__column--primary">
                   <div class="contact">
                     <div class="contact__value" data-max-line="1">
-                      
-                      {{#AB_first-name--bc}}<span>{{{AB_first-name--bc}}}</span>{{/AB_first-name--bc}}{{^AB_first-name--bc}}<span>{{{user.first_name}}}</span>{{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}{{/AB_first-name--bc}}   
-                {{#AB_surname--bc}}<span>{{{AB_surname--bc}}}</span>{{/AB_surname--bc}}{{^AB_surname--bc}}<span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}{{/AB_surname--bc}}
-                    
+                      {{#AB_first-name--a4f}}<span>{{{AB_first-name--a4f}}}</span>{{/AB_first-name--a4f}}
+                      {{^AB_first-name--a4f}}<span>{{{user.first_name}}}</span>
+                      {{^user.first_name}}<span>&lt;FirstName&gt;</span>{{/user.first_name}}
+                      {{/AB_first-name--a4f}}   
+                      {{#AB_surname--a4f}}<span>{{{AB_surname--a4f}}}</span>{{/AB_surname--a4f}}
+                      {{^AB_surname--a4f}}
+                      <span>{{{user.last_name}}}</span>{{^user.last_name}}<span>&lt;Surname&gt;</span>{{/user.last_name}}
+                      {{/AB_surname--a4f}}
                     </div> <!--contact__value-->
-                  
-                  
+
                   </div> <!--contact-->
                   <div class="contact">
                     <div class="contact__value" data-max-line="1">{{{AB_title--a4f}}}{{^AB_title--a4f}}{{{user.title}}}{{/AB_title--a4f}}</div> <!--contact__value-->
@@ -667,17 +675,16 @@
           </div> <!--body--backPage-->
           <div class="footer footer--backPage">
 
-            
+
             <div class="terms">
-            {{#AB_terms-and-conditions--a4f}}
-              <span>{{{account.snippets.adelaide-abn}}},</span>
+              {{#AB_terms-and-conditions--a4f}}
               <span>{{{AB_terms-and-conditions--a4f}}}</span>
               <span>1393425, </span>
               <span>{{#metadata}}OUT_{{export_id}}{{/metadata}}{{^metadata}}EXPORT ID WILL GO HERE{{/metadata}}, </span>
               <span class="js-date"> </span>
-            {{/AB_terms-and-conditions--a4f}}
+              {{/AB_terms-and-conditions--a4f}}
             </div> <!--terms-->
-            
+
             <div class="footer__row">
               {{#AB_broker-website--a4f}}
               <div class="website" data-max-line="1">{{{AB_broker-website--a4f}}}</div> <!--website-->
@@ -752,11 +759,10 @@
           });            
         });
       }    
-      
-      function injectDate() {
-        const container = document.querySelector('.fit');
-        const date = container.querySelector('.js-date');
 
+      function injectDate() {
+        const date = document.querySelector('.js-date');
+        if(!date) return;
         date.textContent = new Date().toLocaleDateString('en-AU');
       }
 
@@ -798,8 +804,8 @@
       };
 
       tableRowClassLowerCase();
-      
-                    function detectProjectKit() {
+
+      function detectProjectKit() {
         const isProjectKit = window.parent.document.querySelector(".preview-frame")
         const overflowFinder = document.querySelectorAll(".overflow");
         if ( isProjectKit ) {
@@ -814,7 +820,7 @@
       }
 
       detectProjectKit();
-      
+
     </script>
 
 
